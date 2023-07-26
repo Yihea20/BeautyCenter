@@ -1,7 +1,7 @@
 ﻿namespace BeautyCenter.DTOs
 {
     public class CreateCenter {
-        //name
+        public string Name { get; set; }
         public DateTime OpenTime { get; set; }
         public DateTime CloseTime
         {

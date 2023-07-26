@@ -19,12 +19,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(MapperInitilizer));
 builder.Host.UseSerilog((ctx, cl) => cl.WriteTo.Console().ReadFrom.Configuration(ctx.Configuration));
+builder.Services.AddScoped<IAuthoManger, AuthoManger>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddCors(options => { options.AddPolicy("AllowAll", b => b.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin()); });
 
-builder.Services.AddScoped<IAuthoManger, AuthoManger>();
+
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -62,7 +63,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "Beauty Center API",
+        Title = "BeautyCenterAPI",
         Version = "v1"
     });
 });
@@ -75,12 +76,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         string swaggerJsonBasePath = string.IsNullOrWhiteSpace(c.RoutePrefix) ? "." : "..";
-        c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "Beauty Center Api");
+        c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "BeautyCenterApi");
     });
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

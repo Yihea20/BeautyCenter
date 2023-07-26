@@ -80,9 +80,9 @@ namespace BeautyCenter.Controllers
                 Random rnd = new Random();
                 int myRandomNo = rnd.Next(10000000, 99999999);
                 var person = await _userManager.FindByEmailAsync(personDTO.Email) as Person;
-                person.Code = myRandomNo;
+                person.Code = myRandomNo.ToString();
                 await _userManager.UpdateAsync(person);
-                return Accepted(new TokenRequest { Token = await _authoManger.CreatToken(), RefreshToken = await _authoManger.CreateRefreshToken() });
+                return Accepted(new TokenRequest { Token = await _authoManger.CreatToken(), RefreshToken = await _authoManger.CreateRefreshToken(), rand= myRandomNo.ToString() });
             }
             catch (Exception ex)
             {

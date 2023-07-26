@@ -16,6 +16,6 @@ namespace BeautyCenter.Models
         [ForeignKey(nameof(Gallery))]
         public int? GalleryId { get; set; }
         public Gallery? Gallery { get; set; }
-        public int Code { get; set; } = 0;
+        public string? Code { get; set; }
     }
 }

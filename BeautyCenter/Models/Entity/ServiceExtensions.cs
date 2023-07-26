@@ -20,7 +20,9 @@ namespace BeautyCenter.Models.Entity
                 q.Password.RequireUppercase = false;
             })
                 ;
-            builder = new Microsoft.AspNetCore.Identity.IdentityBuilder(builder.UserType, typeof(IdentityRole), services);
+            builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), services);
+            builder.AddTokenProvider("BeautyCenterApi", typeof(DataProtectorTokenProvider<Person>));
+
             builder.AddEntityFrameworkStores<BeautyDbContext>().AddDefaultTokenProviders();
         }
         public static void ConfigureJwt(this IServiceCollection services, IConfiguration Configuration)

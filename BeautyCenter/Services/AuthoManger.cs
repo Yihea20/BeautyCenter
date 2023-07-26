@@ -99,7 +99,7 @@ namespace BeautyCenter.Services
             _user = await _userManager.FindByNameAsync(username);
             try
             {
-                var isValid = await _userManager.VerifyUserTokenAsync(_user, "CovidApi", "RefreshToken", request.RefreshToken);
+                var isValid = await _userManager.VerifyUserTokenAsync(_user, "BeautyCenterApi", "RefreshToken", request.RefreshToken);
                 if (isValid)
                 {
                     return new TokenRequest { Token = await CreatToken(), RefreshToken = await CreateRefreshToken(),rand= request.rand };

@@ -4,6 +4,7 @@ using BeautyCenter.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeautyCenter.Migrations
 {
     [DbContext(typeof(BeautyDbContext))]
-    partial class BeautyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230727023108_1")]
+    partial class _1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,7 +198,7 @@ namespace BeautyCenter.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IdSerivce")
+                    b.Property<int>("IdSerivce")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -319,7 +322,7 @@ namespace BeautyCenter.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CostomerDetId")
+                    b.Property<int>("CostomerDetId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -390,19 +393,19 @@ namespace BeautyCenter.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1d2c0214-3a9c-4d79-b0ba-99944ed717a6",
+                            Id = "41f90e25-8f12-4bad-be4c-b506e4dc0b74",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "28e64ba3-6459-4059-8104-92827347849e",
+                            Id = "9c97cfd0-2e9b-486d-9537-59f88c477c72",
                             Name = "manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "107acbbf-786a-4904-9014-00566c36e77e",
+                            Id = "e14e22ec-1998-4e95-865c-da3b9dd49137",
                             Name = "employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -639,7 +642,9 @@ namespace BeautyCenter.Migrations
                 {
                     b.HasOne("BeautyCenter.Models.Service", "Service")
                         .WithMany()
-                        .HasForeignKey("IdSerivce");
+                        .HasForeignKey("IdSerivce")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BeautyCenter.Models.User", null)
                         .WithMany("Offers")
@@ -667,7 +672,9 @@ namespace BeautyCenter.Migrations
                 {
                     b.HasOne("BeautyCenter.Models.CostomerDet", "CostomerDet")
                         .WithMany()
-                        .HasForeignKey("CostomerDetId");
+                        .HasForeignKey("CostomerDetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CostomerDet");
                 });

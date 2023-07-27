@@ -29,7 +29,7 @@ namespace BeautyCenter.Models.Entity
         {
 
             var jwtSetting = Configuration.GetSection("jwt");
-            var key = Environment.GetEnvironmentVariable("KEY");
+            var key = JWTKey.KEY;
             services.AddAuthentication(
                 o =>
                 {

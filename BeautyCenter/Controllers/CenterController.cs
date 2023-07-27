@@ -23,7 +23,7 @@ namespace BeautyCenter.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<IActionResult> AddCenter([FromBody] Center center)
+        public async Task<IActionResult> AddCenter([FromBody] CreateCenter center)
         {
             var result = _mapper.Map<Center>(center);
             await _unitOfWork.Center.Insert(result);

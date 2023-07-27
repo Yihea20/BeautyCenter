@@ -1,6 +1,7 @@
 ﻿
 using BeautyCenter.DTOs;
 using BeautyCenter.Models;
+using BeautyCenter.Models.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -63,7 +64,7 @@ namespace BeautyCenter.Services
 
         private SigningCredentials GetSingingCredentials()
         {
-            var key = Environment.GetEnvironmentVariable("KEY");
+            var key = JWTKey.KEY;
             var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }

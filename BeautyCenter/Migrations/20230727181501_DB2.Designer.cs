@@ -4,6 +4,7 @@ using BeautyCenter.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeautyCenter.Migrations
 {
     [DbContext(typeof(BeautyDbContext))]
-    partial class BeautyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230727181501_DB2")]
+    partial class DB2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -319,7 +322,7 @@ namespace BeautyCenter.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CostomerDetId")
+                    b.Property<int>("CostomerDetId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -390,19 +393,19 @@ namespace BeautyCenter.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1d2c0214-3a9c-4d79-b0ba-99944ed717a6",
+                            Id = "80fc4945-2493-4841-848c-b1aa113477ed",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "28e64ba3-6459-4059-8104-92827347849e",
+                            Id = "776fa1d5-11d1-47f7-88e9-443b73744dc7",
                             Name = "manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "107acbbf-786a-4904-9014-00566c36e77e",
+                            Id = "ec39a200-571a-4316-a8aa-499150fffde8",
                             Name = "employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -667,7 +670,9 @@ namespace BeautyCenter.Migrations
                 {
                     b.HasOne("BeautyCenter.Models.CostomerDet", "CostomerDet")
                         .WithMany()
-                        .HasForeignKey("CostomerDetId");
+                        .HasForeignKey("CostomerDetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CostomerDet");
                 });

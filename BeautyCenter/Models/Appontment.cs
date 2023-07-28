@@ -6,7 +6,7 @@ namespace BeautyCenter.Models
     {
         public int Id { get; set; }
         [ForeignKey(nameof(Service))]
-        public int ServiceId { set; get; }
+        public int? ServiceId { set; get; }
         public Service Service { set; get; }
         [ForeignKey(nameof(User))]
         public string ? UserID { set; get; }

@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using BeautyCenter.DTOs;
 using static BeautyCenter.DTOs.CreateCenter;
+using static BeautyCenter.DTOs.CreateOffer;
+using static BeautyCenter.DTOs.CreateService;
+using static BeautyCenter.DTOs.CreateFavorite;
+using static BeautyCenter.DTOs.CreateAppointment;
 
 namespace BeautyCenter.Models.Entity
 {
@@ -12,6 +16,10 @@ namespace BeautyCenter.Models.Entity
             CreateMap<User, UserRegistDTO>().ReverseMap();
             CreateMap<Center, CreateCenter>().ReverseMap();
             CreateMap<Center, CenterDTO>().ReverseMap();
+            CreateMap<Offers, OfferDTO>().ReverseMap();
+            CreateMap<Service, ServiceDTO>().ReverseMap();
+            CreateMap<Favorate, FavoriteDTO>().ReverseMap();
+            CreateMap<Appontment, AppointmentDTO>().ReverseMap();
         }
     }
 }

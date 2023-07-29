@@ -3,7 +3,6 @@ using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static BeautyCenter.DTOs.CreateCenter;
 using static BeautyCenter.DTOs.CreateService;
 
 namespace BeautyCenter.Controllers
@@ -22,7 +21,7 @@ namespace BeautyCenter.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<IActionResult> AddService([FromBody] Service service)
+        public async Task<IActionResult> AddService([FromBody] ServiceDTO service)
         {
             var result = _mapper.Map<Service>(service);
             await _unitOfWork.Service.Insert(result);
@@ -37,5 +36,26 @@ namespace BeautyCenter.Controllers
             var result = _mapper.Map<IList<ServiceDTO>>(service);
             return Ok(result);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteServices(int id)
+        {
+            var service = await _unitOfWork.Service.Get(q => q.Id == id);
+
+
+            if (service == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                await _unitOfWork.Service.Delete(id);
+                await _unitOfWork.Save();
+
+
+                return Ok();
+            }
+        }
+
     }
 }

@@ -9,13 +9,13 @@ namespace BeautyCenter.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FavoriteControoler : ControllerBase
+    public class FavoriteController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<FavoriteControoler> _logger;
+        private readonly ILogger<FavoriteController> _logger;
         private readonly IMapper _mapper;
 
-        public FavoriteControoler(IUnitOfWork unitOfWork, ILogger<FavoriteControoler> logger, IMapper mapper)
+        public FavoriteController(IUnitOfWork unitOfWork, ILogger<FavoriteController> logger, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
@@ -38,5 +38,25 @@ namespace BeautyCenter.Controllers
             await _unitOfWork.Save();
             return Ok();
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteFavorite(int id)
+        {
+            var favorite = await _unitOfWork.Favorate.Get(q => q.Id == id);
+
+
+            if (favorite == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                await _unitOfWork.Favorate.Delete(id);
+                await _unitOfWork.Save();
+
+
+                return Ok();
+            }
+        }
+
     }
 }

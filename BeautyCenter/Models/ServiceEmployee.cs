@@ -9,7 +9,7 @@ namespace BeautyCenter.Models
         public int ServiceId { set; get; }
         public Service Service { get; set; }
         [ForeignKey(nameof(Employee))]
-        public string EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
 
  }

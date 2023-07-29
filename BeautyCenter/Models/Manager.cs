@@ -1,6 +1,6 @@
 ﻿namespace BeautyCenter.Models
 {
-    public class Manager:Person
+    public class Manager:User
     {
     }
 }

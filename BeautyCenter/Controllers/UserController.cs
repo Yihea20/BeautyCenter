@@ -1,46 +1,46 @@
 ﻿using AutoMapper;
+using BeautyCenter.DTOs;
 using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static BeautyCenter.DTOs.CreateEmployee;
 
 namespace BeautyCenter.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<EmployeeController> _logger;
+        private readonly ILogger<UserController> _logger;
         private readonly IMapper _mapper;
 
-        public EmployeeController(IUnitOfWork unitOfWork, ILogger<EmployeeController> logger, IMapper mapper)
+        public UserController(IUnitOfWork unitOfWork, ILogger<UserController> logger, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<IActionResult> AddEmployee([FromBody] Employee employee)
+        public async Task<IActionResult> AddUser([FromBody] CreateUserDTO user)
         {
-            var result = _mapper.Map<Employee>(employee);
-            await _unitOfWork.Employee.Insert(result);
+            var result = _mapper.Map<User>(user);
+            await _unitOfWork.User.Insert(result);
             await _unitOfWork.Save();
             return Ok();
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllEmployee()
+        public async Task<IActionResult> GetAllUsers()
         {
 
-            var employee = await _unitOfWork.Employee.GetAll();
-            var result = _mapper.Map<IList<EmployeeDTO>>(employee);
+            var user = await _unitOfWork.User.GetAll();
+            var result = _mapper.Map<IList<UserDTO>>(user);
             return Ok(result);
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEmployee(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
-            var employee = await _unitOfWork.Employee.Get(q => q.Id==id);
+            var employee = await _unitOfWork.User.Get(q => q.Id == id);
 
 
             if (employee == null)
@@ -49,7 +49,7 @@ namespace BeautyCenter.Controllers
             }
             else
             {
-                await _unitOfWork.Employee.Delete(id);
+                await _unitOfWork.User.Delete(id);
                 await _unitOfWork.Save();
 
 
@@ -59,4 +59,3 @@ namespace BeautyCenter.Controllers
 
     }
 }
-

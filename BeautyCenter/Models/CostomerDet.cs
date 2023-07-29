@@ -8,7 +8,7 @@ namespace BeautyCenter.Models
        
         public string? CostomerDetails { get; set; }
         [ForeignKey(nameof(Employee))]
-        public string? IdSepacificEmployee { get; set; }
+        public int? IdSepacificEmployee { get; set; }
         public Employee? Employee { get; set; }
     }
 }

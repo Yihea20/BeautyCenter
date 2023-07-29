@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BeautyCenter.Models
 {
-    public class BeautyDbContext:IdentityDbContext
+    public class BeautyDbContext:IdentityDbContext<Person>
     {
         public BeautyDbContext(DbContextOptions<BeautyDbContext> options) :base(options){ }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

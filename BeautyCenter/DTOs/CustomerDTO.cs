@@ -6,7 +6,7 @@ namespace BeautyCenter.DTOs
     public class CreateCustomer
     {
 
-        //public string? CostomerDetails { get; set; }
+        public string? CostomerDetails { get; set; }
         //[ForeignKey(nameof(Employee))]
         //public string? IdSepacificEmployee { get; set; }
         //public Employee? Employee { get; set; }

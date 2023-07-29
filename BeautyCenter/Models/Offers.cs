@@ -10,5 +10,6 @@ namespace BeautyCenter.Models
         public Service? Service { get; set; }
         public string Description { get; set; }
     }
-    public class Package : Offers { } 
+    public class Package : Offers 
+    { } 
 }

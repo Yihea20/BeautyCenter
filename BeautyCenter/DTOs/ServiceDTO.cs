@@ -8,7 +8,7 @@ namespace BeautyCenter.DTOs
         public int Price { get; set; }
         public string Name { get; set; }
         public string details { get; set; }
-        [ForeignKey(nameof(CostomerDet))]
+       // [ForeignKey(nameof(CostomerDet))]
         //public int CostomerDetId { get; set; }
         //public CostomerDet CostomerDet { get; set; }
         public DateTime CreatedDate { get; set; }

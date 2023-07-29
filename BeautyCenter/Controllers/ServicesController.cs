@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BeautyCenter.DTOs;
 using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using Microsoft.AspNetCore.Http;
@@ -22,7 +23,7 @@ namespace BeautyCenter.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<IActionResult> AddService([FromBody] Service service)
+        public async Task<IActionResult> AddService([FromBody] CreateService service)
         {
             var result = _mapper.Map<Service>(service);
             await _unitOfWork.Service.Insert(result);

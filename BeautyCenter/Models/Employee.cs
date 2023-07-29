@@ -2,7 +2,7 @@
 {
     public class Employee:User
     {
-        
+        public int Id { get; set; }
         public int Rate { get; set; }
         public int TotlaRate { get; set; }
         public ICollection<Service>? ServicesCanDo { get; set; }

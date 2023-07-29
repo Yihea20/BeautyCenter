@@ -38,6 +38,25 @@ namespace BeautyCenter.Controllers
             await _unitOfWork.Save();
             return Ok();
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteOffer(int id)
+        {
+            var Offer = await _unitOfWork.Offers.Get(q => q.Id == id);
+
+
+            if (Offer == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                await _unitOfWork.Offers.Delete(id);
+                await _unitOfWork.Save();
+
+
+                return Ok();
+            }
+        }
 
     }
 }

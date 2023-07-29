@@ -16,6 +16,10 @@ namespace BeautyCenter.IRebository
 
         public IGenericRepository<Service> Service { get; }
         public IGenericRepository<ServiceEmployee> ServiceEmployee { get; }
+        public IGenericRepository<Employee> Employee { get; }
+
+        public IGenericRepository<CostomerDet> Costomer { get; }
+
         Task Save();
 
 

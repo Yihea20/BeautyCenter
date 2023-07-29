@@ -4,6 +4,7 @@ using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using static BeautyCenter.DTOs.CreateCenter;
 
 namespace BeautyCenter.Controllers
@@ -36,6 +37,48 @@ namespace BeautyCenter.Controllers
             var center = await _unitOfWork.Center.GetAll();
             var result = _mapper.Map<IList<CenterDTO>>(center);
             return Ok(result);
+        }
+       
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCenter(int id)
+        {
+           var center = await _unitOfWork.Center.Get(q=>q.Id==id);
+
+
+            if (center == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                await _unitOfWork.Center.Delete(id);
+                await _unitOfWork.Save();
+
+
+                return Ok();
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCenter(int id, [FromBody] CenterDTO centerDto)
+        {
+            if (centerDto == null || centerDto.Id != id)
+            {
+                return BadRequest();
+            }
+
+            var center = await _unitOfWork.Center.Get(q => q.Id == id);
+
+            if (center == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(centerDto, center);
+
+            await _unitOfWork.Save();
+
+            return NoContent();
         }
     }
 }

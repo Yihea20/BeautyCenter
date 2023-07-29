@@ -23,6 +23,7 @@ namespace BeautyCenter.Rebository
 
         private IGenericRepository<Service> _Service;
         private IGenericRepository<ServiceEmployee> _ServiceEmployee;
+        private IGenericRepository<Employee> _Employee;
 
         public IGenericRepository<Appontment> Appontment =>_Appontment??=new GenericRepository<Appontment
             >(_context);
@@ -45,7 +46,11 @@ namespace BeautyCenter.Rebository
 
         public IGenericRepository<ServiceEmployee> ServiceEmployee =>_ServiceEmployee??= new GenericRepository<ServiceEmployee>(_context);
 
+        public IGenericRepository<Employee> Employee => _Employee ??= new GenericRepository<Employee>(_context);
+
         public IGenericRepository<Image> Image => _Image??=new GenericRepository<Image>(_context);
+
+        public IGenericRepository<CostomerDet> Costomer => throw new NotImplementedException();
 
         public void Dispose()
         {

@@ -5,7 +5,9 @@ using static BeautyCenter.DTOs.CreateOffer;
 using static BeautyCenter.DTOs.CreateService;
 using static BeautyCenter.DTOs.CreateFavorite;
 using static BeautyCenter.DTOs.CreateAppointment;
-
+using static BeautyCenter.DTOs.CreateEmployee;
+using static BeautyCenter.DTOs.CreateCustomer;
+using static BeautyCenter.DTOs.CreateGallery;
 namespace BeautyCenter.Models.Entity
 {
     public class MapperInitilizer : Profile
@@ -20,6 +22,10 @@ namespace BeautyCenter.Models.Entity
             CreateMap<Service, ServiceDTO>().ReverseMap();
             CreateMap<Favorate, FavoriteDTO>().ReverseMap();
             CreateMap<Appontment, AppointmentDTO>().ReverseMap();
+            CreateMap<Employee, EmployeeDTO>().ReverseMap();
+            CreateMap<CostomerDet, CustomerDTO>().ReverseMap();
+            CreateMap<Gallery, GalleryDTO>().ReverseMap();
         }
     }
 }
+

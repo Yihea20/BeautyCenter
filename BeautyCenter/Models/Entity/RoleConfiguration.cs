@@ -16,7 +16,7 @@ namespace BeautyCenter.Models.Entity
                 { Name = "manager", NormalizedName = "MANAGER" },
             new IdentityRole
             { Name = "employee", NormalizedName = "EMPLOYEE" });
-
+            
         }
     }
 }

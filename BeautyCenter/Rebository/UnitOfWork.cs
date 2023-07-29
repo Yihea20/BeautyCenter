@@ -20,38 +20,23 @@ namespace BeautyCenter.Rebository
         private IGenericRepository<Image> _Image;
         private IGenericRepository<Notification> _Notification;
         private IGenericRepository<Offers> _Offers;
-
+        private IGenericRepository<User> _User;
         private IGenericRepository<Service> _Service;
         private IGenericRepository<ServiceEmployee> _ServiceEmployee;
         private IGenericRepository<Employee> _Employee;
 
-        public IGenericRepository<Appontment> Appontment =>_Appontment??=new GenericRepository<Appontment
-            >(_context);
-
-        public IGenericRepository<Center> Center =>_Center??=new GenericRepository<Center>(_context);
-
+        public IGenericRepository<Appontment> Appontment =>_Appontment??=new GenericRepository<Appontment>(_context);
+        public IGenericRepository<Center> Center => _Center ??= new GenericRepository<Center>(_context);
         public IGenericRepository<CostomerDet> CostomerDet => _CostomerDet??=new GenericRepository<CostomerDet>(_context);
-
         public IGenericRepository<Favorate> Favorate =>_Favorate??=new GenericRepository<Favorate>(_context);
-
         public IGenericRepository<Gallery> Gallery => _Gallery??=new GenericRepository< Gallery>(_context);
-
         public IGenericRepository<Notification> Notification =>_Notification??=new GenericRepository<Notification>(_context);
-
         public IGenericRepository<Offers> Offers => _Offers??=new GenericRepository<Offers>(_context);
-
-        
-
-        public IGenericRepository<Service> Service =>_Service??= new GenericRepository<Service>(_context);
-
+        public IGenericRepository<Service> Service => _Service ??= new GenericRepository<Service>(_context);
         public IGenericRepository<ServiceEmployee> ServiceEmployee =>_ServiceEmployee??= new GenericRepository<ServiceEmployee>(_context);
-
         public IGenericRepository<Employee> Employee => _Employee ??= new GenericRepository<Employee>(_context);
-
         public IGenericRepository<Image> Image => _Image??=new GenericRepository<Image>(_context);
-
-        public IGenericRepository<CostomerDet> Costomer => throw new NotImplementedException();
-
+        public IGenericRepository<User> User =>_User??=new GenericRepository<User>(_context);
         public void Dispose()
         {
             _context.Dispose();

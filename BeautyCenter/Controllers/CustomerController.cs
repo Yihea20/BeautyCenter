@@ -33,14 +33,14 @@ namespace BeautyCenter.Controllers
         public async Task<IActionResult> GetAllCustomer()
         {
 
-            var customer = await _unitOfWork.Costomer.GetAll();
+            var customer = await _unitOfWork.CostomerDet.GetAll();
             var result = _mapper.Map<IList<CustomerDTO>>(customer);
             return Ok(result);
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
-            var customer = await _unitOfWork.Costomer.Get(q => q.Id == id);
+            var customer = await _unitOfWork.CostomerDet.Get(q => q.Id == id);
 
 
             if (customer == null)
@@ -49,7 +49,7 @@ namespace BeautyCenter.Controllers
             }
             else
             {
-                await _unitOfWork.Costomer.Delete(id);
+                await _unitOfWork.CostomerDet.Delete(id);
                 await _unitOfWork.Save();
 
 

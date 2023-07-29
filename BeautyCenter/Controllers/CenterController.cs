@@ -60,25 +60,13 @@ namespace BeautyCenter.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCenter(int id, [FromBody] CenterDTO centerDto)
+        public async Task<IActionResult> UpdateCenter(int id, [FromBody] CreateCenter centerDto)
         {
-            if (centerDto == null || centerDto.Id != id)
-            {
-                return BadRequest();
-            }
-
-            var center = await _unitOfWork.Center.Get(q => q.Id == id);
-
-            if (center == null)
-            {
-                return NotFound();
-            }
-
-            _mapper.Map(centerDto, center);
-
+            var old = await _unitOfWork.Center.Get(q => q.Id == id);
+            _mapper.Map(centerDto, old);
+            _unitOfWork.Center.Update(old);
             await _unitOfWork.Save();
-
-            return NoContent();
+            return Ok();
         }
     }
 }

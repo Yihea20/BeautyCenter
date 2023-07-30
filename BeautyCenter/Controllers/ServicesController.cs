@@ -4,6 +4,7 @@ using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static BeautyCenter.DTOs.CreateGallery;
 using static BeautyCenter.DTOs.CreateService;
 
 namespace BeautyCenter.Controllers
@@ -22,13 +23,15 @@ namespace BeautyCenter.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<IActionResult> AddService([FromBody] CreateService service)
+        public async Task<IActionResult> AddService([FromBody] CreateService serviceDto)
         {
-            var result = _mapper.Map<Service>(service);
+            var result = _mapper.Map<Service>(serviceDto);
             await _unitOfWork.Service.Insert(result);
             await _unitOfWork.Save();
             return Ok();
-        }
+       
+        
+         }
         [HttpGet]
         public async Task<IActionResult> GetAllServices()
         {
@@ -65,6 +68,13 @@ namespace BeautyCenter.Controllers
             _unitOfWork.Service.Update(old);
             await _unitOfWork.Save();
             return Ok();
+        }
+        [HttpGet("{Name}")]
+        public async Task<IActionResult> GetService(String Name)
+        {
+            var service = await _unitOfWork.Service.Get(q => q.Name == Name);
+            var result = _mapper.Map<ServiceDTO>(service);
+            return Ok(result);
         }
     }
 }

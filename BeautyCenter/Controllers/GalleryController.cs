@@ -40,9 +40,9 @@ namespace BeautyCenter.Controllers
             var result = _mapper.Map<IList<GalleryDTO>>(gallery);
             return Ok(result);
         }
-
-
-        [HttpDelete("{id}")]
+    
+ 
+    [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGallery(int id)
         {
             var gallery = await _unitOfWork.Gallery.Get(q => q.Id == id);
@@ -70,5 +70,19 @@ namespace BeautyCenter.Controllers
             await _unitOfWork.Save();
             return Ok();
         }
+
+        /// <summary>
+        /// search by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetGallery(int id)
+        {
+            var gallery = await _unitOfWork.Gallery.Get(q => q.Id == id);
+            var result = _mapper.Map<GalleryDTO>(gallery);
+            return Ok(result);
+        }
+
     }
 }

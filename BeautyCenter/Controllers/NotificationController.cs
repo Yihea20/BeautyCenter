@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BeautyCenter.DTOs;
 using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using Microsoft.AspNetCore.Http;
@@ -58,6 +59,15 @@ namespace BeautyCenter.Controllers
 
                 return Ok();
             }
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateNotification(int id, [FromBody] CreateNotification NotificationDto)
+        {
+            var old = await _unitOfWork.Notification.Get(q => q.Id == id);
+            _mapper.Map(NotificationDto, old);
+            _unitOfWork.Notification.Update(old);
+            await _unitOfWork.Save();
+            return Ok();
         }
 
     }

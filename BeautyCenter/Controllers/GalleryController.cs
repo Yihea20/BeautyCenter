@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BeautyCenter.DTOs;
 using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using BeautyCenter.Rebository;
@@ -59,6 +60,15 @@ namespace BeautyCenter.Controllers
 
                 return Ok();
             }
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateGallery(int id, [FromBody] CreateGallery GalleryDto)
+        {
+            var old = await _unitOfWork.Gallery.Get(q => q.Id == id);
+            _mapper.Map(GalleryDto, old);
+            _unitOfWork.Gallery.Update(old);
+            await _unitOfWork.Save();
+            return Ok();
         }
     }
 }

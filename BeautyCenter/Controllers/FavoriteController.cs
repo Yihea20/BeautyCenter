@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BeautyCenter.DTOs;
 using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using Microsoft.AspNetCore.Http;
@@ -56,6 +57,16 @@ namespace BeautyCenter.Controllers
 
                 return Ok();
             }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateFavorite(int id, [FromBody] CreateFavorite favoriteDto)
+        {
+            var old = await _unitOfWork.Favorate.Get(q => q.Id == id);
+            _mapper.Map(favoriteDto, old);
+            _unitOfWork.Favorate.Update(old);
+            await _unitOfWork.Save();
+            return Ok();
         }
 
     }

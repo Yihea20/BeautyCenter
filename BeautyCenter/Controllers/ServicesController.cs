@@ -57,6 +57,14 @@ namespace BeautyCenter.Controllers
                 return Ok();
             }
         }
-
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateService(int id, [FromBody] CreateService ServiceDto) 
+        { 
+            var old = await _unitOfWork.Service.Get(q => q.Id == id);
+            _mapper.Map(ServiceDto, old);
+            _unitOfWork.Service.Update(old);
+            await _unitOfWork.Save();
+            return Ok();
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BeautyCenter.DTOs;
 using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,16 @@ namespace BeautyCenter.Controllers
         {
             var result = _mapper.Map<Appontment>(appointment);
             await _unitOfWork.Appontment.Insert(result);
+            await _unitOfWork.Save();
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAppointment(int id, [FromBody] CreateAppointment AppointmentDto)
+        {
+            var old = await _unitOfWork.Appontment.Get(q => q.Id == id);
+            _mapper.Map(AppointmentDto, old);
+            _unitOfWork.Appontment.Update(old);
             await _unitOfWork.Save();
             return Ok();
         }

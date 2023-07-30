@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BeautyCenter.DTOs;
 using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using Microsoft.AspNetCore.Http;
@@ -58,6 +59,15 @@ namespace BeautyCenter.Controllers
 
                 return Ok();
             }
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateImage(int id, [FromBody] CreateImage ImageDto)
+        {
+            var old = await _unitOfWork.Image.Get(q => q.Id == id);
+            _mapper.Map(ImageDto, old);
+            _unitOfWork.Image.Update(old);
+            await _unitOfWork.Save();
+            return Ok();
         }
 
     }

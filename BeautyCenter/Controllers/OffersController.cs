@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BeautyCenter.DTOs;
 using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using Microsoft.AspNetCore.Http;
@@ -56,6 +57,15 @@ namespace BeautyCenter.Controllers
 
                 return Ok();
             }
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateOffer(int id, [FromBody] CreateOffer OfferDto)
+        {
+            var old = await _unitOfWork.Offers.Get(q => q.Id == id);
+            _mapper.Map(OfferDto, old);
+            _unitOfWork.Offers.Update(old);
+            await _unitOfWork.Save();
+            return Ok();
         }
 
     }

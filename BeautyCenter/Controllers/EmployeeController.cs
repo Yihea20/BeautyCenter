@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BeautyCenter.DTOs;
 using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using Microsoft.AspNetCore.Http;
@@ -55,6 +56,15 @@ namespace BeautyCenter.Controllers
 
                 return Ok();
             }
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateEmployee(int id, [FromBody] CreateEmployee employee)
+        {
+            var old = await _unitOfWork.Employee.Get(q => q.Id == id);
+            _mapper.Map(employee, old);
+            _unitOfWork.Employee.Update(old);
+            await _unitOfWork.Save();
+            return Ok();
         }
 
     }

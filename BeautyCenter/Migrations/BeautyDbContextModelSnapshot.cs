@@ -238,6 +238,10 @@ namespace BeautyCenter.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
+                    b.Property<string>("Typee")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("details")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

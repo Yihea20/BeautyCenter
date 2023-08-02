@@ -49,5 +49,24 @@ namespace BeautyCenter.Controllers
             await _unitOfWork.Save();
             return Ok();
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAppointment(int id)
+        {
+            var appointment = await _unitOfWork.Appontment.Get(q => q.Id == id);
+
+
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                await _unitOfWork.Appontment.Delete(id);
+                await _unitOfWork.Save();
+
+
+                return Ok();
+            }
+        }
     }
 }

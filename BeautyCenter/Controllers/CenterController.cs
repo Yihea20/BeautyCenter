@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using static BeautyCenter.DTOs.CreateCenter;
+using static BeautyCenter.DTOs.CreateService;
 
 namespace BeautyCenter.Controllers
 {
@@ -67,6 +68,14 @@ namespace BeautyCenter.Controllers
             _unitOfWork.Center.Update(old);
             await _unitOfWork.Save();
             return Ok();
+        }
+
+        [HttpGet("{Name}")]
+        public async Task<IActionResult> GetCenter(String Name)
+        {
+            var center = await _unitOfWork.Center.Get(q => q.Name == Name);
+            var result = _mapper.Map<CenterDTO>(center);
+            return Ok(result);
         }
     }
 }

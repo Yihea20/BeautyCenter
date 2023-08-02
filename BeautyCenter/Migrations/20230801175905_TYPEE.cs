@@ -5,25 +5,24 @@
 namespace BeautyCenter.Migrations
 {
     /// <inheritdoc />
-    public partial class BeautyCenter4 : Migration
+    public partial class TYPEE : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Dis",
-                table: "Images",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
+            migrationBuilder.RenameColumn(
+                name: "Type",
+                table: "Services",
+                newName: "Typee");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Dis",
-                table: "Images");
+            migrationBuilder.RenameColumn(
+                name: "Typee",
+                table: "Services",
+                newName: "Type");
         }
     }
 }

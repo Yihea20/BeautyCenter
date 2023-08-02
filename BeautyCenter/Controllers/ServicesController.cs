@@ -69,10 +69,18 @@ namespace BeautyCenter.Controllers
             await _unitOfWork.Save();
             return Ok();
         }
-        [HttpGet("{Name}")]
-        public async Task<IActionResult> GetService(String Name)
+        [HttpGet("Name")]
+        public async Task<IActionResult> GetService(string Name)
         {
             var service = await _unitOfWork.Service.Get(q => q.Name == Name);
+            var result = _mapper.Map<ServiceDTO>(service);
+            return Ok(result);
+        }
+
+        [HttpGet("type")]
+        public async Task<IActionResult> GetServiceByType(string type)
+        {
+            var service = await _unitOfWork.Service.Get(q => q.Typee==type);
             var result = _mapper.Map<ServiceDTO>(service);
             return Ok(result);
         }

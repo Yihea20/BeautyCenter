@@ -23,7 +23,7 @@ namespace BeautyCenter.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<IActionResult> AddEmployee([FromBody] Employee employee)
+        public async Task<IActionResult> AddEmployee([FromBody] CreateEmployee employee)
         {
             var result = _mapper.Map<Employee>(employee);
             await _unitOfWork.Employee.Insert(result);

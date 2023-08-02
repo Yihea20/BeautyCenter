@@ -24,6 +24,7 @@ namespace BeautyCenter.Models.Entity
             CreateMap<Favorate, FavoriteDTO>().ReverseMap();
             CreateMap<Appontment, AppointmentDTO>().ReverseMap();
             CreateMap<Employee, EmployeeDTO>().ReverseMap();
+            CreateMap<Employee, CreateEmployee>().ReverseMap();
             CreateMap<CostomerDet, CustomerDTO>().ReverseMap();
             CreateMap<Gallery, GalleryDTO>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();

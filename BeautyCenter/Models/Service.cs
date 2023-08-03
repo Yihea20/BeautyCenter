@@ -8,7 +8,7 @@ namespace BeautyCenter.Models
       
         public int Price { get; set; }
         public string Name { get; set; }
-        public string Typee { get; set; }
+        public string Type { get; set; }
 
         public string details { get; set; }
         [ForeignKey(nameof(CostomerDet))]

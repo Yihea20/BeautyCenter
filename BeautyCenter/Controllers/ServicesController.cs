@@ -80,7 +80,7 @@ namespace BeautyCenter.Controllers
         [HttpGet("type")]
         public async Task<IActionResult> GetServiceByType(string type)
         {
-            var service = await _unitOfWork.Service.Get(q => q.Typee==type);
+            var service = await _unitOfWork.Service.Get(q => q.Type==type);
             var result = _mapper.Map<ServiceDTO>(service);
             return Ok(result);
         }

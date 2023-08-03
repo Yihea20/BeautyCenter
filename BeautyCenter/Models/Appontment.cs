@@ -7,7 +7,7 @@ namespace BeautyCenter.Models
         public int Id { get; set; }
         [ForeignKey(nameof(Service))]
         public DateTime DateTime { get; set; }
-        public String Status { set; get; }
+        public string Status { set; get; }
         public int? ServiceId { set; get; }
         public Service Service { set; get; }
         [ForeignKey(nameof(User))]

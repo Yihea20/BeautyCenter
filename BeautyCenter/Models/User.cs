@@ -8,8 +8,8 @@ namespace BeautyCenter.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [ForeignKey(nameof(Center))]
-        public int CenterId { get; set; }
-        public Center Center { get; set; }
+        public int ?CenterId { get; set; }
+        public Center? Center { get; set; }
         [ForeignKey(nameof(Image))]
         public int? ImageId { get; set; }
         public Image? Image { get; set; }

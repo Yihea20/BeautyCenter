@@ -5,6 +5,7 @@ using BeautyCenter.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static BeautyCenter.DTOs.CreateEmployee;
+using static BeautyCenter.DTOs.CreateGallery;
 
 namespace BeautyCenter.Controllers
 {
@@ -41,7 +42,7 @@ namespace BeautyCenter.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
-            var employee = await _unitOfWork.Employee.Get(q => q.Id==id);
+            var employee = await _unitOfWork.Employee.Get(q => q.Id == id);
 
 
             if (employee == null)
@@ -67,6 +68,22 @@ namespace BeautyCenter.Controllers
             return Ok();
         }
 
+        [HttpGet("{FirstName}")]
+        public async Task<IActionResult> EmployeeByFirstname(String FirstName)
+        {
+            var employee = await _unitOfWork.Employee.GetAll(q => q.FirstName == FirstName);
+            var result = _mapper.Map<IList<EmployeeDTO>>(employee);
+            return Ok(result);
+
+        }
+        [HttpPost("{LastName}")]
+        public async Task<IActionResult> EmployeeByLastname(String LastName)
+        {
+            var employee = await _unitOfWork.Employee.GetAll(q => q.LastName == LastName);
+            var result = _mapper.Map<IList<EmployeeDTO>>(employee);
+            return Ok(result);
+
+        }
     }
 }
 

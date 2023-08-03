@@ -36,6 +36,7 @@ namespace BeautyCenter.Controllers
         {
             var result = _mapper.Map<Appontment>(appointment);
             await _unitOfWork.Appontment.Insert(result);
+            result.Status = "Upcoming";
             await _unitOfWork.Save();
             return Ok();
         }
@@ -49,24 +50,17 @@ namespace BeautyCenter.Controllers
             await _unitOfWork.Save();
             return Ok();
         }
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAppointment(int id)
+        [HttpPut("{Status}")]
+        public async Task<IActionResult> DeleteAppointment(String Status, [FromBody] CreateAppointment AppointmentDto)
         {
-            var appointment = await _unitOfWork.Appontment.Get(q => q.Id == id);
+            var old = await _unitOfWork.Appontment.Get(q => q.Status == Status);
+            _mapper.Map(AppointmentDto, old);
+            _unitOfWork.Appontment.Update(old);
+            await _unitOfWork.Save();
+            return Ok();
 
-
-            if (appointment == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                await _unitOfWork.Appontment.Delete(id);
-                await _unitOfWork.Save();
-
-
-                return Ok();
-            }
         }
+     
+
     }
 }

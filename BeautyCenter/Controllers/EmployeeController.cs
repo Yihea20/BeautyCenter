@@ -84,6 +84,16 @@ namespace BeautyCenter.Controllers
             return Ok(result);
 
         }
+
+        [HttpGet("Rate")]
+        public async Task<IActionResult> EmployeeByRate(int rate)
+        {
+            var employee = await _unitOfWork.Employee.GetAll(q => q.Rate == rate);
+            var result = _mapper.Map<IList<EmployeeDTO>>(employee);
+            return Ok(result);
+
+        }
+
     }
 }
 

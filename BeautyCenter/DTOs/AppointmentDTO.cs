@@ -7,7 +7,7 @@ namespace BeautyCenter.DTOs
     public class CreateAppointment
     {
 
-        //public int? ServiceId { set; get; }
+        public int ServiceId { set; get; }
         //public Service Service { set; get; }
         //[ForeignKey(nameof(User))]
         //public string? UserID { set; get; }
@@ -16,6 +16,9 @@ namespace BeautyCenter.DTOs
         //public string? EmployeeId { set; get; }
         //public Employee? Employee { get; set; }
         public string Status { set; get; }
+       // public Service Service { set; get; }
+        public int  EmployeeId { set; get; }
+        public int UserID { set; get; }
         public DateTime DateTime { get; set; }
         public class AppointmentDTO :CreateAppointment
         {

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using static BeautyCenter.DTOs.CreateAppointment;
 
 
+
 namespace BeautyCenter.Controllers
 {
     [Route("api/[controller]")]
@@ -47,19 +48,32 @@ namespace BeautyCenter.Controllers
             var old = await _unitOfWork.Appontment.Get(q => q.Id == id);
             _mapper.Map(AppointmentDto, old);
             _unitOfWork.Appontment.Update(old);
+            //int idd = old.User.Id;
+          //UserController.UpdateUserpoint(idd,10);
             await _unitOfWork.Save();
+
             return Ok();
         }
-        [HttpPut("{Status}")]
-        public async Task<IActionResult> DeleteAppointment(String Status, [FromBody] CreateAppointment AppointmentDto)
+
+        [HttpGet("{Status}")]
+        public async Task<IActionResult> AppointmentByStatus(String Status)
         {
-            var old = await _unitOfWork.Appontment.Get(q => q.Status == Status);
-            _mapper.Map(AppointmentDto, old);
-            _unitOfWork.Appontment.Update(old);
-            await _unitOfWork.Save();
-            return Ok();
+            var Appointment = await _unitOfWork.Appontment.GetAll(q => q.Status == Status);
+            var result = _mapper.Map<IList<AppointmentDTO>>(Appointment);
+            return Ok(result);
 
         }
+        //[HttpPut("{Status}")]
+        //public async Task<IActionResult> DeleteAppointment(String Status, [FromBody] CreateAppointment AppointmentDto)
+        //{
+        //    var old = await _unitOfWork.Appontment.Get(q => q.Status == Status);
+        //   // CreateAppointment AppointmentDto;
+        //    _mapper.Map(AppointmentDto.Status, old);
+        //    _unitOfWork.Appontment.Update(old);
+        //    await _unitOfWork.Save();
+        //    return Ok();
+
+        //}
      
 
     }

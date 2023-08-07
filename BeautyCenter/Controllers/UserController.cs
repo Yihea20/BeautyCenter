@@ -65,5 +65,14 @@ namespace BeautyCenter.Controllers
             await _unitOfWork.Save();
             return Ok();
         }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateUserpoint(int id, [FromBody] int point)
+        //{
+        //    var old = await _unitOfWork.User.Get(q => q.Id == id);
+        //    _mapper.Map(point, old);
+        //    _unitOfWork.User.Update(old);
+        //    await _unitOfWork.Save();
+        //    return Ok();
+        //}
     }
 }

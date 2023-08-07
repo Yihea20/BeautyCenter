@@ -4,6 +4,7 @@ using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using static BeautyCenter.DTOs.CreateGallery;
 using static BeautyCenter.DTOs.CreateService;
 
@@ -81,7 +82,7 @@ namespace BeautyCenter.Controllers
         public async Task<IActionResult> GetServiceByType(string type)
         {
             var service = await _unitOfWork.Service.Get(q => q.Type==type);
-            var result = _mapper.Map<ServiceDTO>(service);
+            var result = _mapper.Map<IList <ServiceDTO >>(service);
             return Ok(result);
         }
     }

@@ -15,6 +15,7 @@ namespace BeautyCenter.DTOs
         public DateTime CreatedDate { get; set; }
         //public ICollection<Employee> Employees { get; set; }
         //public ICollection<User> Users { get; set; }
+
         public class ServiceDTO: CreateService
         {
             public int Id { get; set; }

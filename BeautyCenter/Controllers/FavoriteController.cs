@@ -4,6 +4,7 @@ using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static BeautyCenter.DTOs.CreateEmployee;
 using static BeautyCenter.DTOs.CreateFavorite;
 
 namespace BeautyCenter.Controllers
@@ -67,6 +68,13 @@ namespace BeautyCenter.Controllers
             _unitOfWork.Favorate.Update(old);
             await _unitOfWork.Save();
             return Ok();
+        }
+        [HttpGet("ServiceId")]
+        public async Task<IActionResult> GetAllFavoriteEmployee(int ServiceId)
+        {
+            var favorite = await _unitOfWork.Favorate.GetAll(x=>x.ServiceId==ServiceId);
+            var result = _mapper.Map<IList<Favorate>>(favorite);
+            return Ok(result);
         }
 
     }

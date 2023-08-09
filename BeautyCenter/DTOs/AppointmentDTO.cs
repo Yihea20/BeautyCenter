@@ -20,9 +20,27 @@ namespace BeautyCenter.DTOs
         public int  EmployeeId { set; get; }
         public int UserID { set; get; }
         public DateTime DateTime { get; set; }
-        public class AppointmentDTO :CreateAppointment
-        {
-            public int Id { get; set; }
-        }
+     }
+    public class AppointmentDTO : CreateAppointment
+    {
+        public int Id { get; set; }
+    }
+
+    public class EmployeeAppointment {
+
+        public int ServiceId { set; get; }
+        public string Status { set; get; }
+        public int UserID { set; get; }
+        public DateTime DateTime { get; set; }
+
+
+    }
+    public class UserAppointment {
+
+        public int ServiceId { set; get; }
+        public string Status { set; get; }
+        public int EmployeeId { set; get; }
+        public DateTime DateTime { get; set; }
+
     }
 }

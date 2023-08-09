@@ -9,7 +9,7 @@ namespace BeautyCenter.Models
         public int Price { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
-
+        //image 
         public string details { get; set; }
         [ForeignKey(nameof(CostomerDet))]
         public int ? CostomerDetId { get; set; }

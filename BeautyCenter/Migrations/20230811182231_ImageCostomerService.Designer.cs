@@ -4,6 +4,7 @@ using BeautyCenter.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeautyCenter.Migrations
 {
     [DbContext(typeof(BeautyDbContext))]
-    partial class BeautyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230811182231_ImageCostomerService")]
+    partial class ImageCostomerService
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,7 +241,6 @@ namespace BeautyCenter.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<byte[]>("ImageArray")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
@@ -426,11 +428,9 @@ namespace BeautyCenter.Migrations
 
             modelBuilder.Entity("BeautyCenter.Models.Image", b =>
                 {
-                    b.HasOne("BeautyCenter.Models.Gallery", "Gallery")
+                    b.HasOne("BeautyCenter.Models.Gallery", null)
                         .WithMany("Images")
                         .HasForeignKey("GalleryId");
-
-                    b.Navigation("Gallery");
                 });
 
             modelBuilder.Entity("BeautyCenter.Models.Notification", b =>

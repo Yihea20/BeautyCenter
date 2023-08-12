@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeautyCenter.Migrations
 {
     [DbContext(typeof(BeautyDbContext))]
-    [Migration("20230802153725_AddType")]
-    partial class AddType
+    [Migration("20230811210712_ImageCostomerService1")]
+    partial class ImageCostomerService1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,6 +38,10 @@ namespace BeautyCenter.Migrations
 
                     b.Property<int>("Id")
                         .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserID")
                         .IsRequired()
@@ -88,6 +92,9 @@ namespace BeautyCenter.Migrations
 
                     b.Property<int?>("IdSepacificEmployee")
                         .HasColumnType("int");
+
+                    b.Property<byte[]>("ImageArray")
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
 
@@ -145,12 +152,11 @@ namespace BeautyCenter.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Dis")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("GalleryId")
                         .HasColumnType("int");
+
+                    b.Property<byte[]>("ImageArray")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -234,6 +240,10 @@ namespace BeautyCenter.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<byte[]>("ImageArray")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -282,7 +292,7 @@ namespace BeautyCenter.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CenterId")
+                    b.Property<int?>("CenterId")
                         .HasColumnType("int");
 
                     b.Property<string>("Discriminator")
@@ -478,9 +488,7 @@ namespace BeautyCenter.Migrations
                 {
                     b.HasOne("BeautyCenter.Models.Center", "Center")
                         .WithMany("Users")
-                        .HasForeignKey("CenterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CenterId");
 
                     b.HasOne("BeautyCenter.Models.Gallery", "Gallery")
                         .WithMany()

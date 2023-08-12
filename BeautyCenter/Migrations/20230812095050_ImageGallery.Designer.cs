@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeautyCenter.Migrations
 {
     [DbContext(typeof(BeautyDbContext))]
-    [Migration("20230803141317_AddStatus")]
-    partial class AddStatus
+    [Migration("20230812095050_ImageGallery")]
+    partial class ImageGallery
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,6 +93,9 @@ namespace BeautyCenter.Migrations
                     b.Property<int?>("IdSepacificEmployee")
                         .HasColumnType("int");
 
+                    b.Property<byte[]>("ImageArray")
+                        .HasColumnType("varbinary(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdSepacificEmployee");
@@ -149,12 +152,11 @@ namespace BeautyCenter.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Dis")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("GalleryId")
                         .HasColumnType("int");
+
+                    b.Property<byte[]>("ImageArray")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -237,6 +239,10 @@ namespace BeautyCenter.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("ImageArray")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -423,9 +429,11 @@ namespace BeautyCenter.Migrations
 
             modelBuilder.Entity("BeautyCenter.Models.Image", b =>
                 {
-                    b.HasOne("BeautyCenter.Models.Gallery", null)
+                    b.HasOne("BeautyCenter.Models.Gallery", "Gallery")
                         .WithMany("Images")
                         .HasForeignKey("GalleryId");
+
+                    b.Navigation("Gallery");
                 });
 
             modelBuilder.Entity("BeautyCenter.Models.Notification", b =>

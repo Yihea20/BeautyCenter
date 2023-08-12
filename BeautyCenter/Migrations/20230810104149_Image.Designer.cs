@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeautyCenter.Migrations
 {
     [DbContext(typeof(BeautyDbContext))]
-    [Migration("20230801175905_TYPEE")]
-    partial class TYPEE
+    [Migration("20230810104149_Image")]
+    partial class Image
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,6 +38,10 @@ namespace BeautyCenter.Migrations
 
                     b.Property<int>("Id")
                         .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserID")
                         .IsRequired()
@@ -145,12 +149,11 @@ namespace BeautyCenter.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Dis")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("GalleryId")
                         .HasColumnType("int");
+
+                    b.Property<byte[]>("ImageArray")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -234,6 +237,9 @@ namespace BeautyCenter.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ImageId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -241,7 +247,7 @@ namespace BeautyCenter.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
-                    b.Property<string>("Typee")
+                    b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -252,6 +258,8 @@ namespace BeautyCenter.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CostomerDetId");
+
+                    b.HasIndex("ImageId");
 
                     b.ToTable("Services");
                 });
@@ -282,7 +290,7 @@ namespace BeautyCenter.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CenterId")
+                    b.Property<int?>("CenterId")
                         .HasColumnType("int");
 
                     b.Property<string>("Discriminator")
@@ -452,7 +460,13 @@ namespace BeautyCenter.Migrations
                         .WithMany()
                         .HasForeignKey("CostomerDetId");
 
+                    b.HasOne("BeautyCenter.Models.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
                     b.Navigation("CostomerDet");
+
+                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("BeautyCenter.Models.ServiceEmployee", b =>
@@ -478,9 +492,7 @@ namespace BeautyCenter.Migrations
                 {
                     b.HasOne("BeautyCenter.Models.Center", "Center")
                         .WithMany("Users")
-                        .HasForeignKey("CenterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CenterId");
 
                     b.HasOne("BeautyCenter.Models.Gallery", "Gallery")
                         .WithMany()

@@ -29,8 +29,6 @@ namespace BeautyCenter.Models
                            vvc => vvc.HasOne(prop => prop.Service).WithMany().HasForeignKey(prop => prop.ServiceId).OnDelete(DeleteBehavior.Restrict),
                            vvc => vvc.HasKey(prop => new { prop.ServiceId, prop.EmployeeId })
                            );
-
-            base.OnModelCreating(modelBuilder);
            // modelBuilder.ApplyConfiguration(new RoleConfiguration());
         }
         public DbSet<Center> Centers { get; set; }

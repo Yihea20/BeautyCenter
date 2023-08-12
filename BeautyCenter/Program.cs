@@ -8,7 +8,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<BeautyDbContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("BeautyDb1")));
+builder.Services.AddDbContext<BeautyDbContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("BeautyDb2")));
 // Add services to the container.
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();

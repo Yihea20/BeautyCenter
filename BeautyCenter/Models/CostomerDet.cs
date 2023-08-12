@@ -7,6 +7,7 @@ namespace BeautyCenter.Models
         public int Id { get; set; }
        
         public string? CostomerDetails { get; set; }
+        public byte[]? ImageArray { get; set; }
         [ForeignKey(nameof(Employee))]
         public int? IdSepacificEmployee { get; set; }
         public Employee? Employee { get; set; }

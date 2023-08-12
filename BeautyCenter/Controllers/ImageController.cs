@@ -4,6 +4,7 @@ using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 using static BeautyCenter.DTOs.CreateGallery;
 using static BeautyCenter.DTOs.CreateImage;
 
@@ -24,14 +25,28 @@ namespace BeautyCenter.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<IActionResult> AddImage([FromBody] ImageDTO image)
+        public async Task<IActionResult> AddImage([FromForm]ImageFile image)
         {
-            
-                var result = _mapper.Map<Image>(image);
-                await _unitOfWork.Image.Insert(result);
-                await _unitOfWork.Save();
-                return Ok();
-           }
+            //CreateImage create = new CreateImage();
+            try
+            {
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    await image.file.CopyToAsync(stream);
+                    //create.Name = image;
+
+                    var result = _mapper.Map<Image>(image.Create) ;
+                    result.ImageArray = stream.ToArray();
+                    await _unitOfWork.Image.Insert(result);
+                    await _unitOfWork.Save();
+                    return Ok();
+                }
+            }
+            catch (Exception e) {
+                return NotFound();
+            } 
+        
+        }
         [HttpGet]
         public async Task<IActionResult> GetAllImage()
         {
@@ -39,6 +54,25 @@ namespace BeautyCenter.Controllers
             var image = await _unitOfWork.Image.GetAll();
             var result = _mapper.Map<IList<ImageDTO>>(image);
             return Ok(result);
+        }
+        [HttpGet]
+        [Route("id")]
+        public async Task<IActionResult> GetImage(int id)
+        {
+
+            var image = await _unitOfWork.Image.Get(q=>q.Id==id);
+            var result = _mapper.Map<ImageDTO>(image);
+            result.ImagyArray = Convert.ToBase64String(image.ImageArray);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("download")]
+        public async Task<IActionResult> DownloadImage(int id)
+        {
+
+            var image = await _unitOfWork.Image.Get(q => q.Id == id);
+            return File(image.ImageArray,"image/jpg",image.Name+".jpg");
         }
 
         [HttpDelete("{id}")]

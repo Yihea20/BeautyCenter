@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -9,6 +11,11 @@ namespace BeautyCenter.Models.Entity
 {
     public static class ServiceExtensions
     {
+        public static void ConfigureNotification(this IServiceCollection services)
+        {
+            var order = GoogleCredential.FromFile("C:\\Users\\yihea\\source\\repos\\BeautyCenter\\BeautyCenter\\firebase.json");
+            FirebaseApp.Create(new AppOptions { Credential = order, });
+        }
         public static void ConfigureIdentity(this IServiceCollection services)
         {
             var builder = services.AddIdentityCore<Person>(q => 

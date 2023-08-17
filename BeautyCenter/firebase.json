@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "beautycenter-3ec9c",
+  "private_key_id": "8c57bf7209f71a8a8ab1402458876305d2daad5f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC1sgHR7lcrcPRc\nghK/U3mMEpNrZdedtkhVL3N7y5rRQKfwlDXSiPw6qra0AXg+BjKJG1W7dCCpjANM\nj5YMDUWLx89IOBxfPLcTL3+VxglZAI7Jb1+MbafVYf2XLNmqxkPRXYri4ebY5Kn9\noIj+IGpEoKG9eUXS82U+QQtI4UKnIT1fyN+TW5nWoqS94Ys4YyzU3bBEQ0b/F/pc\nWtN9SySueravwksgiB+DEPj/fsbbBMxtzlBlf/FKZW/XEZ9Q4FwEVW0giUHxhPkl\nbtRHKhy2qix2n6cCrAerSAmB/goFJxznxbecH9R7FdR/nF4RrzkTzJTnz9QC4/nX\nC1jIMwvRAgMBAAECggEAIb0jtGFPI3xui80FgSyVeeqrIDrBjoIeLV9J0PeOUIPy\ni2xiEC2qtJQlqAhL1SyebrI6ObxHImSi6jERejxuqRWZyn3M2uxxzGi6BsxGyRWe\n7g21zuQ/0ZJIHi3QX3NAfZyioR20mZrga/3G4nWPdh3j2sStsA3NQ4GdgFN/5nun\nMbOOtp7FbimeBCV6IMrRTX9kpg3ReQJYMHQoW4/b5Y+4HJMjGzLVhSZj6hBMf6gn\ncBbmElO4e55Kd0w0WOtS7NT3NPwktEp1Pcc/psf+MxfZM+aJ1VtiCnU3JuE6skfR\nLENrlaXxsJVw85MqG9grQhbR5uUHF2YQacW4NqPwrwKBgQD5aHcchkad0pKamgYz\nMSFxKu9DfMTTSDWjjkKwmMZ37OzSK9S/ktXQw34Z//TnS6l4bUMDEpD9uepOZOK7\n4ENY3dMvNfACIGN6OyepmCCcSLzonZezH4wg7nV4kuIXxe9Dpyp2N/DOWrQl4nq3\nUetdf+fKLmS7ARTSi5FeYqx90wKBgQC6f2MAvGtDagN6LF24bnuHK/548yfAMfMh\n3yhpaXEBwSbyyD+NCj4ZW9p/e/v2N4cEsMdAd1HjfwExS4Eob577gtFhFFZsf8p9\nR6W51Z1NajEfH7UmN/AhWQgssc06K2QpkR7cb+vZJogqxOMuNiPy7CZBuLcR+NV/\n90FZVfy1SwKBgBuFq586MhC4a/UjigucIFScqEqKOi4WidTCnhlewof5XSjULWX2\njiG7cO7tj9j2QH1JkVuFcPqOyYxdFagl10i3MdbD3PhfGpsia/4LC44zeKUyvsrF\ncHEx30Su8MQu03hjugvRoIElATwtAd247IAk3S8yb2szc1jIjgIcYWyBAoGAV7Zn\n8sWrURaAMirBnWdg868OTQZXcL5NUmXpVMKBosicL91cflIN6NFZj1HZq/BrsRoP\nbFNyESP/hJa1VTZCOJpLLXRqPTdRHeDfoepExE8ocTHxedsfNh/wh0zMcApOXnph\nYF3HN+c2bZ8SFf7io3LLf2eHuo0kpL2+X2zgoMcCgYBpxlTLz5DmTlsTFmvReunB\nIBirNFmc8yNqO13J2lLue+246oxXk+UYhXqwDopLe0KSu58sBjpA9BqXs5ADVKa8\n2gUGN9ZSHyCWN8yP2iouGw+yJo41MEM+j92Nzeu+f606cUE0+cMdprEhGpoV4QkD\nrF6quTfVGBtCd+boyQTSbA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-3dact@beautycenter-3ec9c.iam.gserviceaccount.com",
+  "client_id": "111084821570477700149",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-3dact%40beautycenter-3ec9c.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

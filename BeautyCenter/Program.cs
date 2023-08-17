@@ -13,6 +13,7 @@ builder.Services.AddDbContext<BeautyDbContext>(op => op.UseSqlServer(builder.Con
 //builder.Services.AddAuthentication();
 //builder.Services.ConfigureIdentity();
 //builder.Services.ConfigureJwt(builder.Configuration);
+builder.Services.ConfigureNotification();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -2,10 +2,10 @@
 using BeautyCenter.DTOs;
 using BeautyCenter.IRebository;
 using BeautyCenter.Models;
+using FirebaseAdmin.Messaging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static BeautyCenter.DTOs.CreateImage;
-using static BeautyCenter.DTOs.CreateNotification;
+
 
 namespace BeautyCenter.Controllers
 {
@@ -24,51 +24,60 @@ namespace BeautyCenter.Controllers
             _logger = logger;
             _mapper = mapper;
         }
-        [HttpPost]
-        public async Task<IActionResult> AddNotification([FromBody] NotificationDTO notification)
+        [HttpPost("send-notification-to-user")]
+        public async Task<IActionResult> SendNotificationUser([FromBody] CreateNotificationForUser request)
         {
-
-            var result = _mapper.Map<Notification>(notification);
-            await _unitOfWork.Notification.Insert(result);
-            await _unitOfWork.Save();
-            return Ok();
-        }
-        [HttpGet]
-        public async Task<IActionResult> GetAllNotification()
-        {
-
-            var notification = await _unitOfWork.Notification.GetAll();
-            var result = _mapper.Map<IList<NotificationDTO>>(notification);
-            return Ok(result);
-        }
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNotification(int id)
-        {
-            var notification = await _unitOfWork.Notification.Get(q => q.Id == id);
-
-
-            if (notification == null)
+            var message = new Message
             {
-                return NotFound();
+                Notification = new FirebaseAdmin.Messaging.Notification
+                {
+                    Title = request.Title,
+                    Body = request.Body,
+                },
+                Token=request.Token,
+            };
+
+            try
+            {
+                var response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
+                var notifi = _mapper.Map<Models.Notification>(request);
+                await _unitOfWork.Notification.Insert(notifi);
+                await _unitOfWork.Save();
+                return Ok(new { Message = "Notification sent successfully.", Response = response });
             }
-            else
+            catch (Exception ex)
             {
-                await _unitOfWork.Notification.Delete(id);
+                return BadRequest($"Failed to send notification: {ex.Message}");
+            }
+        }
+        [HttpPost("send-notification-to-group")]
+        public async Task<IActionResult> SendNotificationGroup([FromBody] CreateNotificationForGroup request)
+        {
+            var message = new Message
+            {
+                Notification = new FirebaseAdmin.Messaging.Notification
+                {
+                    Title = request.Title,
+                    Body = request.Body,
+                },
+                Token = request.Topic,
+            };
+
+            try
+            {
+                var response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
+                var notifi = _mapper.Map<Models.Notification>(request);
+                await _unitOfWork.Notification.Insert(notifi);
                 await _unitOfWork.Save();
 
-
-                return Ok();
+                return Ok(new { Message = "Notification sent successfully to topic.", Response = response });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to send notification: {ex.Message}");
             }
         }
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateNotification(int id, [FromBody] CreateNotification NotificationDto)
-        {
-            var old = await _unitOfWork.Notification.Get(q => q.Id == id);
-            _mapper.Map(NotificationDto, old);
-            _unitOfWork.Notification.Update(old);
-            await _unitOfWork.Save();
-            return Ok();
-        }
+
 
     }
 }

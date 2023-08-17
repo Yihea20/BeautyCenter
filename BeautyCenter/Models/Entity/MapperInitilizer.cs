@@ -14,6 +14,9 @@ namespace BeautyCenter.Models.Entity
     {
         public MapperInitilizer()
         {
+            CreateMap<Notification, CreateNotificationForUser>().ReverseMap();
+            CreateMap<Notification, CreateNotificationForGroup>().ReverseMap();
+            CreateMap<Notification, NotificationDTO>().ReverseMap();
             CreateMap<User, UserLoginDTO>().ReverseMap();
             CreateMap<User, UserRegistDTO>().ReverseMap();
             CreateMap<Center, CreateCenter>().ReverseMap();

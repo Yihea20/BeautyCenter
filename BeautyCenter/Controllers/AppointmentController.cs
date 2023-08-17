@@ -24,30 +24,30 @@ namespace BeautyCenter.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllAppontment()
+        public async Task<IActionResult> GetAllAppointment()
         {
-            var appointment = await _unitOfWork.Appontment.GetAll();
-            var result = _mapper.Map<IList<Appontment>>(appointment);
+            var appointment = await _unitOfWork.Appointment.GetAll();
+            var result = _mapper.Map<IList<Appointment>>(appointment);
             return Ok(result);
         }
 
 
         [HttpPost]
         [Route("add_user_appointment")]
-        public async Task<IActionResult> AddUserAppontment([FromBody] UserAppointment appointment)
+        public async Task<IActionResult> AddUserAppointment([FromBody] UserAppointment appointment)
         {
-            var result = _mapper.Map<Appontment>(appointment);
-            await _unitOfWork.Appontment.Insert(result);
+            var result = _mapper.Map<Appointment>(appointment);
+            await _unitOfWork.Appointment.Insert(result);
             result.Status = "Upcoming";
             await _unitOfWork.Save();
             return Ok();
         }
         [HttpPost]
         [Route("add_employee_appointment")]
-        public async Task<IActionResult> AddEmployeeAppontment([FromBody] EmployeeAppointment appointment)
+        public async Task<IActionResult> AddEmployeeAppointment([FromBody] EmployeeAppointment appointment)
         {
-            var result = _mapper.Map<Appontment>(appointment);
-            await _unitOfWork.Appontment.Insert(result);
+            var result = _mapper.Map<Appointment>(appointment);
+            await _unitOfWork.Appointment.Insert(result);
             result.Status = "Upcoming";
             await _unitOfWork.Save();
             return Ok();
@@ -55,9 +55,9 @@ namespace BeautyCenter.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAppointment(int id, [FromBody] CreateAppointment AppointmentDto)
         {
-            var old = await _unitOfWork.Appontment.Get(q => q.Id == id);
+            var old = await _unitOfWork.Appointment.Get(q => q.Id == id);
             _mapper.Map(AppointmentDto, old);
-            _unitOfWork.Appontment.Update(old);
+            _unitOfWork.Appointment.Update(old);
             //int idd = old.User.Id;
           //UserController.UpdateUserpoint(idd,10);
             await _unitOfWork.Save();
@@ -68,7 +68,7 @@ namespace BeautyCenter.Controllers
         [HttpGet("{Status}")]
         public async Task<IActionResult> AppointmentByStatus(String Status)
         {
-            var Appointment = await _unitOfWork.Appontment.GetAll(q => q.Status == Status);
+            var Appointment = await _unitOfWork.Appointment.GetAll(q => q.Status == Status);
             var result = _mapper.Map<IList<AppointmentDTO>>(Appointment);
             return Ok(result);
 

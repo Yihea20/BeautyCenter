@@ -22,7 +22,9 @@ namespace BeautyCenter.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BeautyCenter.Models.Appontment", b =>
+            modelBuilder.HasSequence("PersonSequence");
+
+            modelBuilder.Entity("BeautyCenter.Models.Appointment", b =>
                 {
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
@@ -50,7 +52,7 @@ namespace BeautyCenter.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Appontments");
+                    b.ToTable("Appointments");
                 });
 
             modelBuilder.Entity("BeautyCenter.Models.Center", b =>
@@ -76,7 +78,7 @@ namespace BeautyCenter.Migrations
                     b.ToTable("Centers");
                 });
 
-            modelBuilder.Entity("BeautyCenter.Models.CostomerDet", b =>
+            modelBuilder.Entity("BeautyCenter.Models.CustomerDet", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -84,23 +86,23 @@ namespace BeautyCenter.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CostomerDetails")
+                    b.Property<string>("CustomerDetails")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("IdSepacificEmployee")
                         .HasColumnType("int");
 
-                    b.Property<byte[]>("ImageArray")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IdSepacificEmployee");
 
-                    b.ToTable("CostomerDets");
+                    b.ToTable("CustomerDets");
                 });
 
-            modelBuilder.Entity("BeautyCenter.Models.Favorate", b =>
+            modelBuilder.Entity("BeautyCenter.Models.Favorite", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -109,6 +111,9 @@ namespace BeautyCenter.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ManagerId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ServiceId")
@@ -121,11 +126,13 @@ namespace BeautyCenter.Migrations
 
                     b.HasIndex("EmployeeId");
 
+                    b.HasIndex("ManagerId");
+
                     b.HasIndex("ServiceId");
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Favorates");
+                    b.ToTable("Favorites");
                 });
 
             modelBuilder.Entity("BeautyCenter.Models.Gallery", b =>
@@ -152,11 +159,11 @@ namespace BeautyCenter.Migrations
                     b.Property<int?>("GalleryId")
                         .HasColumnType("int");
 
-                    b.Property<byte[]>("ImageArray")
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("URL")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -204,7 +211,13 @@ namespace BeautyCenter.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("IdSerivce")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ManagerId")
                         .HasColumnType("int");
 
                     b.Property<int?>("UserId")
@@ -212,7 +225,11 @@ namespace BeautyCenter.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EmployeeId");
+
                     b.HasIndex("IdSerivce");
+
+                    b.HasIndex("ManagerId");
 
                     b.HasIndex("UserId");
 
@@ -223,6 +240,44 @@ namespace BeautyCenter.Migrations
                     b.UseTphMappingStrategy();
                 });
 
+            modelBuilder.Entity("BeautyCenter.Models.Person", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR [PersonSequence]");
+
+                    SqlServerPropertyBuilderExtensions.UseSequence(b.Property<int>("Id"));
+
+                    b.Property<int?>("CenterId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("GalleryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageURL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GalleryId");
+
+                    b.ToTable("People");
+
+                    b.UseTpcMappingStrategy();
+                });
+
             modelBuilder.Entity("BeautyCenter.Models.Service", b =>
                 {
                     b.Property<int>("Id")
@@ -231,15 +286,18 @@ namespace BeautyCenter.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CostomerDetId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte[]>("ImageArray")
+                    b.Property<int?>("CustomerDetId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageURL")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ManagerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -258,7 +316,9 @@ namespace BeautyCenter.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CostomerDetId");
+                    b.HasIndex("CustomerDetId");
+
+                    b.HasIndex("ManagerId");
 
                     b.ToTable("Services");
                 });
@@ -281,7 +341,7 @@ namespace BeautyCenter.Migrations
                     b.ToTable("ServiceEmployees");
                 });
 
-            modelBuilder.Entity("BeautyCenter.Models.User", b =>
+            modelBuilder.Entity("BeautyCenter.Models.TimeModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -289,43 +349,17 @@ namespace BeautyCenter.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CenterId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("GalleryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ImageId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Points")
+                    b.Property<int>("EmployyId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CenterId");
+                    b.HasIndex("EmployyId");
 
-                    b.HasIndex("GalleryId");
-
-                    b.HasIndex("ImageId");
-
-                    b.ToTable("Users");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
-
-                    b.UseTphMappingStrategy();
+                    b.ToTable("TimeModels");
                 });
 
             modelBuilder.Entity("BeautyCenter.Models.Package", b =>
@@ -337,13 +371,7 @@ namespace BeautyCenter.Migrations
 
             modelBuilder.Entity("BeautyCenter.Models.Employee", b =>
                 {
-                    b.HasBaseType("BeautyCenter.Models.User");
-
-                    b.Property<int?>("CenterId1")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
+                    b.HasBaseType("BeautyCenter.Models.Person");
 
                     b.Property<string>("Exp")
                         .IsRequired()
@@ -355,19 +383,30 @@ namespace BeautyCenter.Migrations
                     b.Property<int>("TotlaRate")
                         .HasColumnType("int");
 
-                    b.HasIndex("CenterId1");
+                    b.HasIndex("CenterId");
 
-                    b.HasDiscriminator().HasValue("Employee");
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("BeautyCenter.Models.Manager", b =>
                 {
-                    b.HasBaseType("BeautyCenter.Models.User");
+                    b.HasBaseType("BeautyCenter.Models.Person");
 
-                    b.HasDiscriminator().HasValue("Manager");
+                    b.HasIndex("CenterId");
+
+                    b.ToTable("Managers");
                 });
 
-            modelBuilder.Entity("BeautyCenter.Models.Appontment", b =>
+            modelBuilder.Entity("BeautyCenter.Models.User", b =>
+                {
+                    b.HasBaseType("BeautyCenter.Models.Person");
+
+                    b.HasIndex("CenterId");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("BeautyCenter.Models.Appointment", b =>
                 {
                     b.HasOne("BeautyCenter.Models.Employee", "Employee")
                         .WithMany()
@@ -394,7 +433,7 @@ namespace BeautyCenter.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("BeautyCenter.Models.CostomerDet", b =>
+            modelBuilder.Entity("BeautyCenter.Models.CustomerDet", b =>
                 {
                     b.HasOne("BeautyCenter.Models.Employee", "Employee")
                         .WithMany()
@@ -403,18 +442,22 @@ namespace BeautyCenter.Migrations
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("BeautyCenter.Models.Favorate", b =>
+            modelBuilder.Entity("BeautyCenter.Models.Favorite", b =>
                 {
                     b.HasOne("BeautyCenter.Models.Employee", "Employee")
-                        .WithMany()
+                        .WithMany("Favorites")
                         .HasForeignKey("EmployeeId");
+
+                    b.HasOne("BeautyCenter.Models.Manager", null)
+                        .WithMany("Favorites")
+                        .HasForeignKey("ManagerId");
 
                     b.HasOne("BeautyCenter.Models.Service", "Service")
                         .WithMany()
                         .HasForeignKey("ServiceId");
 
                     b.HasOne("BeautyCenter.Models.User", "User")
-                        .WithMany("Favorates")
+                        .WithMany("Favorites")
                         .HasForeignKey("UserID");
 
                     b.Navigation("Employee");
@@ -444,24 +487,47 @@ namespace BeautyCenter.Migrations
 
             modelBuilder.Entity("BeautyCenter.Models.Offers", b =>
                 {
+                    b.HasOne("BeautyCenter.Models.Employee", null)
+                        .WithMany("Offers")
+                        .HasForeignKey("EmployeeId");
+
                     b.HasOne("BeautyCenter.Models.Service", "Service")
                         .WithMany()
                         .HasForeignKey("IdSerivce");
 
-                    b.HasOne("BeautyCenter.Models.User", null)
+                    b.HasOne("BeautyCenter.Models.Manager", null)
+                        .WithMany("Offers")
+                        .HasForeignKey("ManagerId");
+
+                    b.HasOne("BeautyCenter.Models.User", "User")
                         .WithMany("Offers")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Service");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BeautyCenter.Models.Person", b =>
+                {
+                    b.HasOne("BeautyCenter.Models.Gallery", "Gallery")
+                        .WithMany()
+                        .HasForeignKey("GalleryId");
+
+                    b.Navigation("Gallery");
                 });
 
             modelBuilder.Entity("BeautyCenter.Models.Service", b =>
                 {
-                    b.HasOne("BeautyCenter.Models.CostomerDet", "CostomerDet")
+                    b.HasOne("BeautyCenter.Models.CustomerDet", "CustomerDet")
                         .WithMany()
-                        .HasForeignKey("CostomerDetId");
+                        .HasForeignKey("CustomerDetId");
 
-                    b.Navigation("CostomerDet");
+                    b.HasOne("BeautyCenter.Models.Manager", null)
+                        .WithMany("ServicesOffers")
+                        .HasForeignKey("ManagerId");
+
+                    b.Navigation("CustomerDet");
                 });
 
             modelBuilder.Entity("BeautyCenter.Models.ServiceEmployee", b =>
@@ -483,32 +549,42 @@ namespace BeautyCenter.Migrations
                     b.Navigation("Service");
                 });
 
+            modelBuilder.Entity("BeautyCenter.Models.TimeModel", b =>
+                {
+                    b.HasOne("BeautyCenter.Models.Employee", "Employee")
+                        .WithMany("DateTime")
+                        .HasForeignKey("EmployyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("BeautyCenter.Models.Employee", b =>
+                {
+                    b.HasOne("BeautyCenter.Models.Center", "Center")
+                        .WithMany("Employees")
+                        .HasForeignKey("CenterId");
+
+                    b.Navigation("Center");
+                });
+
+            modelBuilder.Entity("BeautyCenter.Models.Manager", b =>
+                {
+                    b.HasOne("BeautyCenter.Models.Center", "Center")
+                        .WithMany()
+                        .HasForeignKey("CenterId");
+
+                    b.Navigation("Center");
+                });
+
             modelBuilder.Entity("BeautyCenter.Models.User", b =>
                 {
                     b.HasOne("BeautyCenter.Models.Center", "Center")
                         .WithMany("Users")
                         .HasForeignKey("CenterId");
 
-                    b.HasOne("BeautyCenter.Models.Gallery", "Gallery")
-                        .WithMany()
-                        .HasForeignKey("GalleryId");
-
-                    b.HasOne("BeautyCenter.Models.Image", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
-
                     b.Navigation("Center");
-
-                    b.Navigation("Gallery");
-
-                    b.Navigation("Image");
-                });
-
-            modelBuilder.Entity("BeautyCenter.Models.Employee", b =>
-                {
-                    b.HasOne("BeautyCenter.Models.Center", null)
-                        .WithMany("Employees")
-                        .HasForeignKey("CenterId1");
                 });
 
             modelBuilder.Entity("BeautyCenter.Models.Center", b =>
@@ -523,9 +599,27 @@ namespace BeautyCenter.Migrations
                     b.Navigation("Images");
                 });
 
+            modelBuilder.Entity("BeautyCenter.Models.Employee", b =>
+                {
+                    b.Navigation("DateTime");
+
+                    b.Navigation("Favorites");
+
+                    b.Navigation("Offers");
+                });
+
+            modelBuilder.Entity("BeautyCenter.Models.Manager", b =>
+                {
+                    b.Navigation("Favorites");
+
+                    b.Navigation("Offers");
+
+                    b.Navigation("ServicesOffers");
+                });
+
             modelBuilder.Entity("BeautyCenter.Models.User", b =>
                 {
-                    b.Navigation("Favorates");
+                    b.Navigation("Favorites");
 
                     b.Navigation("Offers");
                 });

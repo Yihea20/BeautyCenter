@@ -8,11 +8,11 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<BeautyDbContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("BeautyDb2")));
+builder.Services.AddDbContext<BeautyDbContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("BeautyDb5")));
 // Add services to the container.
-builder.Services.AddAuthentication();
-builder.Services.ConfigureIdentity();
-builder.Services.ConfigureJwt(builder.Configuration);
+//builder.Services.AddAuthentication();
+//builder.Services.ConfigureIdentity();
+//builder.Services.ConfigureJwt(builder.Configuration);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -70,7 +70,7 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment()||app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>

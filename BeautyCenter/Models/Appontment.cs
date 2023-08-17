@@ -2,7 +2,7 @@
 
 namespace BeautyCenter.Models
 {
-    public class Appontment
+    public class Appointment
     {
         public int Id { get; set; }
         [ForeignKey(nameof(Service))]
@@ -14,7 +14,7 @@ namespace BeautyCenter.Models
         public int? UserID { set; get; }
         public User? User { get; set; }
         [ForeignKey(nameof(Employee))]
-        public int ? EmployeeId { set; get; }
+        public int? EmployeeId { set; get; }
         public Employee? Employee { get; set; }
     }
 }

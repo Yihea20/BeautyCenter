@@ -2,7 +2,7 @@
 
 namespace BeautyCenter.Models
 {
-    public class Favorate
+    public class Favorite
     {
         public int Id { get; set; }
         [ForeignKey(nameof(User))]

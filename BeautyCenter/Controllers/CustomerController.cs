@@ -25,8 +25,8 @@ namespace BeautyCenter.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCenter([FromBody] CustomerDTO customer)
         {
-            var result = _mapper.Map<CostomerDet>(customer);
-            await _unitOfWork.CostomerDet.Insert(result);
+            var result = _mapper.Map<CustomerDet>(customer);
+            await _unitOfWork.CustomerDet.Insert(result);
             await _unitOfWork.Save();
             return Ok();
         }
@@ -34,14 +34,14 @@ namespace BeautyCenter.Controllers
         public async Task<IActionResult> GetAllCustomer()
         {
 
-            var customer = await _unitOfWork.CostomerDet.GetAll();
+            var customer = await _unitOfWork.CustomerDet.GetAll();
             var result = _mapper.Map<IList<CustomerDTO>>(customer);
             return Ok(result);
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
-            var customer = await _unitOfWork.CostomerDet.Get(q => q.Id == id);
+            var customer = await _unitOfWork.CustomerDet.Get(q => q.Id == id);
 
 
             if (customer == null)
@@ -50,7 +50,7 @@ namespace BeautyCenter.Controllers
             }
             else
             {
-                await _unitOfWork.CostomerDet.Delete(id);
+                await _unitOfWork.CustomerDet.Delete(id);
                 await _unitOfWork.Save();
 
 
@@ -60,9 +60,9 @@ namespace BeautyCenter.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCustomer(int id, [FromBody] CreateCustomer customerDto)
         {
-            var old = await _unitOfWork.CostomerDet.Get(q => q.Id == id);
+            var old = await _unitOfWork.CustomerDet.Get(q => q.Id == id);
             _mapper.Map(customerDto, old);
-            _unitOfWork.CostomerDet.Update(old);
+            _unitOfWork.CustomerDet.Update(old);
             await _unitOfWork.Save();
             return Ok();
         }

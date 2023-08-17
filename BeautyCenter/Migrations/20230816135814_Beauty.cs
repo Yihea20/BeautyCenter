@@ -6,11 +6,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BeautyCenter.Migrations
 {
     /// <inheritdoc />
-    public partial class Image : Migration
+    public partial class Beauty : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateSequence(
+                name: "PersonSequence");
+
             migrationBuilder.CreateTable(
                 name: "Centers",
                 columns: table => new
@@ -39,13 +42,43 @@ namespace BeautyCenter.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Employees",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR [PersonSequence]"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CenterId = table.Column<int>(type: "int", nullable: true),
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GalleryId = table.Column<int>(type: "int", nullable: true),
+                    Points = table.Column<int>(type: "int", nullable: false),
+                    Rate = table.Column<int>(type: "int", nullable: false),
+                    TotlaRate = table.Column<int>(type: "int", nullable: false),
+                    Exp = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employees_Centers_CenterId",
+                        column: x => x.CenterId,
+                        principalTable: "Centers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Employees_Galleries_GalleryId",
+                        column: x => x.GalleryId,
+                        principalTable: "Galleries",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Images",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageArray = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    URL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GalleryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -59,23 +92,65 @@ namespace BeautyCenter.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Managers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR [PersonSequence]"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CenterId = table.Column<int>(type: "int", nullable: true),
-                    ImageId = table.Column<int>(type: "int", nullable: true),
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GalleryId = table.Column<int>(type: "int", nullable: true),
-                    Points = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Rate = table.Column<int>(type: "int", nullable: true),
-                    TotlaRate = table.Column<int>(type: "int", nullable: true),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Exp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CenterId1 = table.Column<int>(type: "int", nullable: true)
+                    Points = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Managers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Managers_Centers_CenterId",
+                        column: x => x.CenterId,
+                        principalTable: "Centers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Managers_Galleries_GalleryId",
+                        column: x => x.GalleryId,
+                        principalTable: "Galleries",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "People",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR [PersonSequence]"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CenterId = table.Column<int>(type: "int", nullable: true),
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GalleryId = table.Column<int>(type: "int", nullable: true),
+                    Points = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_People", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_People_Galleries_GalleryId",
+                        column: x => x.GalleryId,
+                        principalTable: "Galleries",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR [PersonSequence]"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CenterId = table.Column<int>(type: "int", nullable: true),
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GalleryId = table.Column<int>(type: "int", nullable: true),
+                    Points = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,39 +161,50 @@ namespace BeautyCenter.Migrations
                         principalTable: "Centers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Users_Centers_CenterId1",
-                        column: x => x.CenterId1,
-                        principalTable: "Centers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_Users_Galleries_GalleryId",
                         column: x => x.GalleryId,
                         principalTable: "Galleries",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Users_Images_ImageId",
-                        column: x => x.ImageId,
-                        principalTable: "Images",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "CostomerDets",
+                name: "CustomerDets",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CostomerDetails = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomerDetails = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdSepacificEmployee = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CostomerDets", x => x.Id);
+                    table.PrimaryKey("PK_CustomerDets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CostomerDets_Users_IdSepacificEmployee",
+                        name: "FK_CustomerDets_Employees_IdSepacificEmployee",
                         column: x => x.IdSepacificEmployee,
-                        principalTable: "Users",
+                        principalTable: "Employees",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TimeModels",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EmployyId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TimeModels", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TimeModels_Employees_EmployyId",
+                        column: x => x.EmployyId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -130,28 +216,29 @@ namespace BeautyCenter.Migrations
                     Price = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageId = table.Column<int>(type: "int", nullable: true),
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     details = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CostomerDetId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CustomerDetId = table.Column<int>(type: "int", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ManagerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Services", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Services_CostomerDets_CostomerDetId",
-                        column: x => x.CostomerDetId,
-                        principalTable: "CostomerDets",
+                        name: "FK_Services_CustomerDets_CustomerDetId",
+                        column: x => x.CustomerDetId,
+                        principalTable: "CustomerDets",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Services_Images_ImageId",
-                        column: x => x.ImageId,
-                        principalTable: "Images",
+                        name: "FK_Services_Managers_ManagerId",
+                        column: x => x.ManagerId,
+                        principalTable: "Managers",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Appontments",
+                name: "Appointments",
                 columns: table => new
                 {
                     ServiceId = table.Column<int>(type: "int", nullable: false),
@@ -163,21 +250,21 @@ namespace BeautyCenter.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Appontments", x => new { x.EmployeeId, x.ServiceId });
+                    table.PrimaryKey("PK_Appointments", x => new { x.EmployeeId, x.ServiceId });
                     table.ForeignKey(
-                        name: "FK_Appontments_Services_ServiceId",
+                        name: "FK_Appointments_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Services_ServiceId",
                         column: x => x.ServiceId,
                         principalTable: "Services",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Appontments_Users_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Appontments_Users_UserID",
+                        name: "FK_Appointments_Users_UserID",
                         column: x => x.UserID,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -185,30 +272,36 @@ namespace BeautyCenter.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Favorates",
+                name: "Favorites",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<int>(type: "int", nullable: true),
                     EmployeeId = table.Column<int>(type: "int", nullable: true),
-                    ServiceId = table.Column<int>(type: "int", nullable: true)
+                    ServiceId = table.Column<int>(type: "int", nullable: true),
+                    ManagerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Favorates", x => x.Id);
+                    table.PrimaryKey("PK_Favorites", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Favorates_Services_ServiceId",
+                        name: "FK_Favorites_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Favorites_Managers_ManagerId",
+                        column: x => x.ManagerId,
+                        principalTable: "Managers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Favorites_Services_ServiceId",
                         column: x => x.ServiceId,
                         principalTable: "Services",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Favorates_Users_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Favorates_Users_UserID",
+                        name: "FK_Favorites_Users_UserID",
                         column: x => x.UserID,
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -240,13 +333,25 @@ namespace BeautyCenter.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdSerivce = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true)
+                    EmployeeId = table.Column<int>(type: "int", nullable: true),
+                    ManagerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Offers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Offers_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Offers_Managers_ManagerId",
+                        column: x => x.ManagerId,
+                        principalTable: "Managers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Offers_Services_IdSerivce",
                         column: x => x.IdSerivce,
@@ -271,47 +376,62 @@ namespace BeautyCenter.Migrations
                 {
                     table.PrimaryKey("PK_ServiceEmployees", x => new { x.ServiceId, x.EmployeeId });
                     table.ForeignKey(
+                        name: "FK_ServiceEmployees_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_ServiceEmployees_Services_ServiceId",
                         column: x => x.ServiceId,
                         principalTable: "Services",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ServiceEmployees_Users_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appontments_ServiceId",
-                table: "Appontments",
+                name: "IX_Appointments_ServiceId",
+                table: "Appointments",
                 column: "ServiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appontments_UserID",
-                table: "Appontments",
+                name: "IX_Appointments_UserID",
+                table: "Appointments",
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CostomerDets_IdSepacificEmployee",
-                table: "CostomerDets",
+                name: "IX_CustomerDets_IdSepacificEmployee",
+                table: "CustomerDets",
                 column: "IdSepacificEmployee");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Favorates_EmployeeId",
-                table: "Favorates",
+                name: "IX_Employees_CenterId",
+                table: "Employees",
+                column: "CenterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_GalleryId",
+                table: "Employees",
+                column: "GalleryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Favorites_EmployeeId",
+                table: "Favorites",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Favorates_ServiceId",
-                table: "Favorates",
+                name: "IX_Favorites_ManagerId",
+                table: "Favorites",
+                column: "ManagerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Favorites_ServiceId",
+                table: "Favorites",
                 column: "ServiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Favorates_UserID",
-                table: "Favorates",
+                name: "IX_Favorites_UserID",
+                table: "Favorites",
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
@@ -320,9 +440,24 @@ namespace BeautyCenter.Migrations
                 column: "GalleryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Managers_CenterId",
+                table: "Managers",
+                column: "CenterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Managers_GalleryId",
+                table: "Managers",
+                column: "GalleryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Notifications_ServiceId",
                 table: "Notifications",
                 column: "ServiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Offers_EmployeeId",
+                table: "Offers",
+                column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Offers_IdSerivce",
@@ -330,9 +465,19 @@ namespace BeautyCenter.Migrations
                 column: "IdSerivce");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Offers_ManagerId",
+                table: "Offers",
+                column: "ManagerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Offers_UserId",
                 table: "Offers",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_People_GalleryId",
+                table: "People",
+                column: "GalleryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceEmployees_EmployeeId",
@@ -340,14 +485,19 @@ namespace BeautyCenter.Migrations
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Services_CostomerDetId",
+                name: "IX_Services_CustomerDetId",
                 table: "Services",
-                column: "CostomerDetId");
+                column: "CustomerDetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Services_ImageId",
+                name: "IX_Services_ManagerId",
                 table: "Services",
-                column: "ImageId");
+                column: "ManagerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TimeModels_EmployyId",
+                table: "TimeModels",
+                column: "EmployyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_CenterId",
@@ -355,29 +505,22 @@ namespace BeautyCenter.Migrations
                 column: "CenterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_CenterId1",
-                table: "Users",
-                column: "CenterId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Users_GalleryId",
                 table: "Users",
                 column: "GalleryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_ImageId",
-                table: "Users",
-                column: "ImageId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Appontments");
+                name: "Appointments");
 
             migrationBuilder.DropTable(
-                name: "Favorates");
+                name: "Favorites");
+
+            migrationBuilder.DropTable(
+                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "Notifications");
@@ -386,25 +529,37 @@ namespace BeautyCenter.Migrations
                 name: "Offers");
 
             migrationBuilder.DropTable(
+                name: "People");
+
+            migrationBuilder.DropTable(
                 name: "ServiceEmployees");
 
             migrationBuilder.DropTable(
-                name: "Services");
-
-            migrationBuilder.DropTable(
-                name: "CostomerDets");
+                name: "TimeModels");
 
             migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
+                name: "Services");
+
+            migrationBuilder.DropTable(
+                name: "CustomerDets");
+
+            migrationBuilder.DropTable(
+                name: "Managers");
+
+            migrationBuilder.DropTable(
+                name: "Employees");
+
+            migrationBuilder.DropTable(
                 name: "Centers");
 
             migrationBuilder.DropTable(
-                name: "Images");
-
-            migrationBuilder.DropTable(
                 name: "Galleries");
+
+            migrationBuilder.DropSequence(
+                name: "PersonSequence");
         }
     }
 }

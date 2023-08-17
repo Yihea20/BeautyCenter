@@ -26,8 +26,8 @@ namespace BeautyCenter.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllFavorite()
         {
-            var favorite = await _unitOfWork.Favorate.GetAll();
-            var result = _mapper.Map<IList<Favorate>>(favorite);
+            var favorite = await _unitOfWork.Favorite.GetAll();
+            var result = _mapper.Map<IList<Favorite>>(favorite);
             return Ok(result);
         }
 
@@ -35,15 +35,15 @@ namespace BeautyCenter.Controllers
         [HttpPost]
         public async Task<IActionResult> AddFavorite([FromBody] FavoriteDTO favorite)
         {
-            var result = _mapper.Map<Favorate>(favorite);
-            await _unitOfWork.Favorate.Insert(result);
+            var result = _mapper.Map<Favorite>(favorite);
+            await _unitOfWork.Favorite.Insert(result);
             await _unitOfWork.Save();
             return Ok();
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFavorite(int id)
         {
-            var favorite = await _unitOfWork.Favorate.Get(q => q.Id == id);
+            var favorite = await _unitOfWork.Favorite.Get(q => q.Id == id);
 
 
             if (favorite == null)
@@ -52,7 +52,7 @@ namespace BeautyCenter.Controllers
             }
             else
             {
-                await _unitOfWork.Favorate.Delete(id);
+                await _unitOfWork.Favorite.Delete(id);
                 await _unitOfWork.Save();
 
 
@@ -63,17 +63,17 @@ namespace BeautyCenter.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateFavorite(int id, [FromBody] CreateFavorite favoriteDto)
         {
-            var old = await _unitOfWork.Favorate.Get(q => q.Id == id);
+            var old = await _unitOfWork.Favorite.Get(q => q.Id == id);
             _mapper.Map(favoriteDto, old);
-            _unitOfWork.Favorate.Update(old);
+            _unitOfWork.Favorite.Update(old);
             await _unitOfWork.Save();
             return Ok();
         }
         [HttpGet("ServiceId")]
         public async Task<IActionResult> GetAllFavoriteEmployee(int ServiceId)
         {
-            var favorite = await _unitOfWork.Favorate.GetAll(x=>x.ServiceId==ServiceId);
-            var result = _mapper.Map<IList<Favorate>>(favorite);
+            var favorite = await _unitOfWork.Favorite.GetAll(x=>x.ServiceId==ServiceId);
+            var result = _mapper.Map<IList<Favorite>>(favorite);
             return Ok(result);
         }
 

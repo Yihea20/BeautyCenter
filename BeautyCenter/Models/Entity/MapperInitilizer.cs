@@ -23,22 +23,22 @@ namespace BeautyCenter.Models.Entity
             CreateMap<Service, ServiceDTO>().ReverseMap();
             CreateMap<Service, CreateService>().ReverseMap();
             CreateMap<Service, UpdateService>().ReverseMap();
-            CreateMap<Service, ServiceWithImage>().ReverseMap();
-            CreateMap<ServiceDTO, ServiceWithImage>().ReverseMap();
-            CreateMap<Favorate, CreateFavorite>().ReverseMap();
-            CreateMap<Favorate, FavoriteDTO>().ReverseMap();
-            CreateMap<Appontment, CreateAppointment>().ReverseMap();
-            CreateMap<Appontment, UserAppointment>().ReverseMap();
-            CreateMap<Appontment, EmployeeAppointment>().ReverseMap();
-            CreateMap<Appontment, AppointmentDTO>().ReverseMap();
+            CreateMap<Favorite, CreateFavorite>().ReverseMap();
+            CreateMap<Favorite, FavoriteDTO>().ReverseMap();
+            CreateMap<Appointment, CreateAppointment>().ReverseMap();
+            CreateMap<Appointment, UserAppointment>().ReverseMap();
+            CreateMap<Appointment, EmployeeAppointment>().ReverseMap();
+            CreateMap<Appointment, AppointmentDTO>().ReverseMap();
             CreateMap<Employee, EmployeeDTO>().ReverseMap();
             CreateMap<Employee, CreateEmployee>().ReverseMap();
-            CreateMap<CostomerDet, CustomerDTO>().ReverseMap();
+            CreateMap<CustomerDet, CustomerDTO>().ReverseMap();
             CreateMap<Image, ImageDTO>().ReverseMap();
             CreateMap<Image, CreateImage>().ReverseMap();
             CreateMap<Gallery, GalleryDTO>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<User, CreateUserDTO>().ReverseMap();
+            CreateMap<TimeModel, TimeDTO>().ReverseMap();
+            CreateMap<TimeModel, CreateTiem>().ReverseMap();
         }
     }
 }

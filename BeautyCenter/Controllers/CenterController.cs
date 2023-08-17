@@ -17,6 +17,7 @@ namespace BeautyCenter.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<CenterController> _logger;
         private readonly IMapper _mapper;
+        
 
         public CenterController(IUnitOfWork unitOfWork, ILogger<CenterController> logger, IMapper mapper)
         {
@@ -32,6 +33,7 @@ namespace BeautyCenter.Controllers
             await _unitOfWork.Save();
             return Ok();
         }
+        
         [HttpGet]
         public async Task<IActionResult> GetAllCenter() {
 

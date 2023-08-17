@@ -18,53 +18,59 @@ namespace BeautyCenter.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<ServicesController> _logger;
         private readonly IMapper _mapper;
-        private IList<ServiceWithImage> services;
-        public ServicesController(IUnitOfWork unitOfWork, ILogger<ServicesController> logger, IMapper mapper)
+        private readonly IWebHostEnvironment environment;
+        public ServicesController(IUnitOfWork unitOfWork, ILogger<ServicesController> logger, IMapper mapper, IWebHostEnvironment _environment)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _mapper = mapper;
-            services = new List<ServiceWithImage>();
+            environment = _environment;
+        }
+        [NonAction]
+        private string GetFilePath(string name)
+        {
+            return this.environment.WebRootPath + "\\Upload\\ServiceImage\\" + name;
         }
         [HttpPost]
-        public async Task<IActionResult> AddService([FromForm] ServiceFile serviceDto)
+        public async Task<IActionResult> AddService([FromForm] ServiceFile service)
         {
-            using (MemoryStream stream=new MemoryStream()) {
-                await serviceDto.File.CopyToAsync(stream);
-
-                var result = _mapper.Map<Service>(serviceDto.Create);
-                result.ImageArray = stream.ToArray();
-                await _unitOfWork.Service.Insert(result);
-                await _unitOfWork.Save();
-                return Ok();
+            try
+            {
+                string FilePath = GetFilePath(service.Create.Name);
+                if (!System.IO.Directory.Exists(FilePath))
+                {
+                    System.IO.Directory.CreateDirectory(FilePath);
+                }
+                string url = FilePath + "\\" + service.Create.Name + ".png";
+                if (System.IO.File.Exists(url))
+                {
+                    System.IO.File.Delete(url);
+                }
+                using (FileStream stream = System.IO.File.Create(url))
+                {
+                    await service.File.CopyToAsync(stream);
+                    var result = _mapper.Map<Service>(service.Create);
+                    result.ImageURL = url;
+                    await _unitOfWork.Service.Insert(result);
+                    await _unitOfWork.Save();
+                    return Ok();
+                }
             }
-        
-         }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+
+        }
+
+
+    
         [HttpGet]
         public async Task<IActionResult> GetAllServices()
         {
 
             var  service= await _unitOfWork.Service.GetAll();
-            foreach (var item in service)
-            {
-                services.Add(new ServiceWithImage()
-                {
-                    Id=item.Id,
-                    Name=item.Name,
-                    Type=item.Type,
-                    Price=item.Price,
-             
-                    ImageArray = Convert.ToBase64String(item.ImageArray),
-                details=item.details,
-                CreatedDate=item.CreatedDate,
-                    CostomerDetId=item.CostomerDetId,
-                CostomerDet=item.CostomerDet,
-                Employees=item.Employees,
-                Users=item.Users,
-
-                });
-            }
-            var result = _mapper.Map<IList<ServiceDTO>>(services);
+            var result = _mapper.Map<IList<ServiceDTO>>(service);
             return Ok(result);
         }
         [HttpGet]
@@ -73,27 +79,9 @@ namespace BeautyCenter.Controllers
         {
 
             var service = await _unitOfWork.Service.GetAll(q=>q.Name==name);
-            foreach (var item in service)
-            {
-                services.Add(new ServiceWithImage()
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Type = item.Type,
-                    Price = item.Price,
 
-                    ImageArray = Convert.ToBase64String(item.ImageArray),
-                    details = item.details,
-                    CreatedDate = item.CreatedDate,
-                    CostomerDetId = item.CostomerDetId,
-                    CostomerDet = item.CostomerDet,
-                    Employees = item.Employees,
-                    Users = item.Users,
-
-                });
-            }
-            var result = _mapper.Map<IList<ServiceDTO>>(services);
-            return Ok(result);
+            var result = _mapper.Map<IList<ServiceDTO>>(service);
+            return Ok(result); return Ok(result);
         }
         [HttpGet]
         [Route("all_by_type")]
@@ -101,26 +89,8 @@ namespace BeautyCenter.Controllers
         {
 
             var service = await _unitOfWork.Service.GetAll(q=>q.Type==type);
-            foreach (var item in service)
-            {
-                services.Add(new ServiceWithImage()
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Type = item.Type,
-                    Price = item.Price,
 
-                    ImageArray = Convert.ToBase64String(item.ImageArray),
-                    details = item.details,
-                    CreatedDate = item.CreatedDate,
-                    CostomerDetId = item.CostomerDetId,
-                    CostomerDet = item.CostomerDet,
-                    Employees = item.Employees,
-                    Users = item.Users,
-
-                });
-            }
-            var result = _mapper.Map<IList<ServiceDTO>>(services);
+            var result = _mapper.Map<IList<ServiceDTO>>(service);
             return Ok(result);
         }
         [HttpDelete("{id}")]
@@ -129,18 +99,25 @@ namespace BeautyCenter.Controllers
             var service = await _unitOfWork.Service.Get(q => q.Id == id);
 
 
-            if (service == null)
+            try
             {
-                return NotFound();
-            }
-            else
-            {
-                await _unitOfWork.Service.Delete(id);
-                await _unitOfWork.Save();
+
+                if (System.IO.File.Exists(service.ImageURL))
+                {
+                    System.IO.File.Delete(service.ImageURL);
+                    await _unitOfWork.Service.Delete(id);
+                    await _unitOfWork.Save();
+
+                    return Ok();
+                }
+                else
+                {
 
 
-                return Ok();
+                    return NotFound();
+                }
             }
+            catch (Exception e) { return BadRequest(); }
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateService(int id, [FromBody] CreateService ServiceDto) 
@@ -156,7 +133,6 @@ namespace BeautyCenter.Controllers
         {
             var service = await _unitOfWork.Service.Get(q => q.Name == Name);
             var result = _mapper.Map<ServiceDTO>(service);
-            result.ImageArray = Convert.ToBase64String(service.ImageArray);
             return Ok(result);
         }
 
@@ -165,7 +141,6 @@ namespace BeautyCenter.Controllers
         {
             var service = await _unitOfWork.Service.Get(q => q.Type==type);
             var result = _mapper.Map<ServiceDTO >(service);
-            result.ImageArray = Convert.ToBase64String(service.ImageArray);
             return Ok(result);
         }
         [HttpPut]

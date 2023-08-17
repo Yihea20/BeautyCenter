@@ -10,13 +10,14 @@ namespace BeautyCenter.Models
         public string Name { get; set; }
         public string Type { get; set; }
 
-        public byte[] ImageArray { get; set; }
+        public string ImageURL { get; set; }
         public string details { get; set; }
-        [ForeignKey(nameof(CostomerDet))]
-        public int ? CostomerDetId { get; set; }
-        public CostomerDet? CostomerDet { get; set; }
+        [ForeignKey(nameof(CustomerDet))]
+        public int ? CustomerDetId { get; set; }
+        public CustomerDet? CustomerDet { get; set; }
         public DateTime CreatedDate { get; set; }
-        public ICollection<Employee>? Employees { get; set; }
+        public ICollection<Employee>? EmployeesCanDo { get; set; }
+        public ICollection<Employee>? EmployeesHasService { get; set; }
         public ICollection<User>? Users { get; set; }
     }
 }

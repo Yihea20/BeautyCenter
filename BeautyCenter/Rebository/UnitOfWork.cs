@@ -6,16 +6,14 @@ namespace BeautyCenter.Rebository
     public class UnitOfWork : IUnitOfWork
     {
         public readonly BeautyDbContext _context;
-
         public UnitOfWork(BeautyDbContext context)
         {
             _context = context;
         }
-
-        private IGenericRepository<Appontment> _Appontment;
+        private IGenericRepository<Appointment> _Appointment;
         private IGenericRepository<Center> _Center;
-        private IGenericRepository<CostomerDet> _CostomerDet; 
-        private IGenericRepository<Favorate> _Favorate;
+        private IGenericRepository<CustomerDet> _CustomerDet; 
+        private IGenericRepository<Favorite> _Favorite;
         private IGenericRepository<Gallery> _Gallery;
         private IGenericRepository<Image> _Image;
         private IGenericRepository<Notification> _Notification;
@@ -24,11 +22,11 @@ namespace BeautyCenter.Rebository
         private IGenericRepository<Service> _Service;
         private IGenericRepository<ServiceEmployee> _ServiceEmployee;
         private IGenericRepository<Employee> _Employee;
-
-        public IGenericRepository<Appontment> Appontment =>_Appontment??=new GenericRepository<Appontment>(_context);
+        private IGenericRepository<TimeModel> _TimeModel { get; set; }
+        public IGenericRepository<Appointment> Appointment => _Appointment ??= new GenericRepository<Appointment>(_context);
         public IGenericRepository<Center> Center => _Center ??= new GenericRepository<Center>(_context);
-        public IGenericRepository<CostomerDet> CostomerDet => _CostomerDet??=new GenericRepository<CostomerDet>(_context);
-        public IGenericRepository<Favorate> Favorate =>_Favorate??=new GenericRepository<Favorate>(_context);
+        public IGenericRepository<CustomerDet> CustomerDet => _CustomerDet ??= new GenericRepository<CustomerDet>(_context);
+        public IGenericRepository<Favorite> Favorite => _Favorite ??= new GenericRepository<Favorite>(_context);
         public IGenericRepository<Gallery> Gallery => _Gallery??=new GenericRepository< Gallery>(_context);
         public IGenericRepository<Notification> Notification =>_Notification??=new GenericRepository<Notification>(_context);
         public IGenericRepository<Offers> Offers => _Offers??=new GenericRepository<Offers>(_context);
@@ -37,6 +35,7 @@ namespace BeautyCenter.Rebository
         public IGenericRepository<Employee> Employee => _Employee ??= new GenericRepository<Employee>(_context);
         public IGenericRepository<Image> Image => _Image??=new GenericRepository<Image>(_context);
         public IGenericRepository<User> User =>_User??=new GenericRepository<User>(_context);
+        public IGenericRepository<TimeModel> TimeModel => _TimeModel ??= new GenericRepository<TimeModel>(_context);
         public void Dispose()
         {
             _context.Dispose();

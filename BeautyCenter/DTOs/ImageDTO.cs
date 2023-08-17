@@ -7,20 +7,17 @@ namespace BeautyCenter.DTOs
     {
        
         public string Name { get; set; }
+        
     }
-    public class ImageDTO
+    public class ImageDTO:CreateImage
         {
             public int Id { get; set; }
-        public string ImagyArray { get; set; }
+        public string? URL { get; set; }
         }
     public class ImageFile 
     {
         public CreateImage Create { get; set; }
         public IFormFile file { get; set; }
-        //public ImageFile()
-        //{
-        //    this.Create = new CreateImage();
-        //}
-
+        
     }
 }

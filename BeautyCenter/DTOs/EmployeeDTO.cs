@@ -7,19 +7,16 @@ namespace BeautyCenter.DTOs
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int CenterId { get; set; }
-  
+        public int CenterId { get; set; }  
         public int Points { get; set; }
-        public int Rate { get; set; }
-   
+        public int Rate { get; set; }   
         public int TotlaRate { get; set; }
         //public ICollection<Service>? ServicesCanDo { get; set; }
-        public DateTime DateTime { get; set; }
         public string Exp { get; set; }
-
-        public class EmployeeDTO :CreateEmployee
-        {
-            public int Id { get; set; }
-        }
+    }
+    public class EmployeeDTO : CreateEmployee
+    {
+        public int Id { get; set; }
+        public ICollection<DateTime> DateTimes { get; set; }
     }
 }

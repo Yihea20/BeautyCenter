@@ -10,9 +10,9 @@ namespace BeautyCenter.Services
 {
     public interface IAuthoManger
     {
-        Task<bool> ValidateUser(UserLoginDTO personDTO);
-        Task<string> CreatToken();
-        Task<string> CreateRefreshToken();
-        Task<TokenRequest> VerifyRefreshToken(TokenRequest request);
+        //Task<bool> ValidateUser(UserLoginDTO personDTO);
+        //Task<string> CreatToken();
+        //Task<string> CreateRefreshToken();
+        //Task<TokenRequest> VerifyRefreshToken(TokenRequest request);
     }
 }

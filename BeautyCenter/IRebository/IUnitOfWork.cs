@@ -5,10 +5,10 @@ namespace BeautyCenter.IRebository
 {
     public interface IUnitOfWork : IDisposable
     {
-        public IGenericRepository<Appontment>Appontment {get;}
-        public IGenericRepository<Center> Center { get;}
-        public IGenericRepository<CostomerDet> CostomerDet { get; }
-        public IGenericRepository<Favorate> Favorate { get; }
+        public IGenericRepository<Appointment> Appointment { get; }
+        public IGenericRepository<Center> Center { get; }
+        public IGenericRepository<CustomerDet> CustomerDet { get; }
+        public IGenericRepository<Favorite> Favorite { get; }
         public IGenericRepository<Gallery> Gallery { get; }
         public IGenericRepository<Image> Image { get; }
         public IGenericRepository<Notification> Notification { get; }
@@ -18,8 +18,7 @@ namespace BeautyCenter.IRebository
         public IGenericRepository<ServiceEmployee> ServiceEmployee { get; }
         public IGenericRepository<Employee> Employee { get; }
         public IGenericRepository<User> User { get; }
-        
-
+        public IGenericRepository<TimeModel> TimeModel { get; }
         Task Save();
 
 

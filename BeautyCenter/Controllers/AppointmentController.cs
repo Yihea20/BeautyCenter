@@ -64,6 +64,25 @@ namespace BeautyCenter.Controllers
 
             return Ok();
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAppointment(int id)
+        {
+            var appointment = await _unitOfWork.Appointment.Get(q => q.Id == id);
+
+
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                await _unitOfWork.Appointment.Delete(id);
+                await _unitOfWork.Save();
+
+
+                return Ok();
+            }
+        }
 
         [HttpGet("{Status}")]
         public async Task<IActionResult> AppointmentByStatus(String Status)

@@ -2,6 +2,7 @@
 using BeautyCenter.DTOs;
 using BeautyCenter.IRebository;
 using BeautyCenter.Models;
+using BeautyCenter.Rebository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static BeautyCenter.DTOs.CreateEmployee;
@@ -70,9 +71,17 @@ namespace BeautyCenter.Controllers
             return Ok();
         }
         [HttpGet("ServiceId")]
-        public async Task<IActionResult> GetAllFavoriteEmployee(int ServiceId)
+        public async Task<IActionResult> GetAllFavoriteService(int ServiceId)
         {
-            var favorite = await _unitOfWork.Favorite.GetAll(x=>x.ServiceId==ServiceId);
+            var favorite = await _unitOfWork.Favorite.GetAll(x => x.ServiceId == ServiceId);
+            var result = _mapper.Map<IList<Favorite>>(favorite);
+            return Ok(result);
+        }
+
+        [HttpGet("EmployeeId")]
+        public async Task<IActionResult> GetAllFavoriteEmployee(int EmployeeId)
+        {
+            var favorite = await _unitOfWork.Favorite.GetAll(x => x.EmployeeId == EmployeeId);
             var result = _mapper.Map<IList<Favorite>>(favorite);
             return Ok(result);
         }

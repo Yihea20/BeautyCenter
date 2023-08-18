@@ -13,7 +13,8 @@ namespace BeautyCenter.Models.Entity
     {
         public static void ConfigureNotification(this IServiceCollection services)
         {
-            var order = GoogleCredential.FromFile("C:\\Users\\yihea\\source\\repos\\BeautyCenter\\BeautyCenter\\firebase.json");
+            var order = GoogleCredential.FromFile("C:\\Users\\Mona\\Desktop\\b\\BeautyCenter\\BeautyCenter\\bin\\Debug\\net7.0\\firebase.json");
+            // var order = GoogleCredential.FromFile("C:\\Users\\yihea\\source\\repos\\BeautyCenter\\BeautyCenter\\firebase.json");
             FirebaseApp.Create(new AppOptions { Credential = order, });
         }
         public static void ConfigureIdentity(this IServiceCollection services)

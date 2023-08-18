@@ -10,7 +10,7 @@ namespace BeautyCenter.DTOs
         public string Body { get; set; }
         public string Token { get; set; }
         public int? ServiceId { get; set; }
-        public Service? Service { get; set; }
+     
 
     }
     public class CreateNotificationForGroup
@@ -18,7 +18,7 @@ namespace BeautyCenter.DTOs
         public string Body { get; set; }
         public string? Topic { get; set; }
         public int? ServiceId { get; set; }
-        public Service? Service { get; set; }
+
     }
     public class NotificationDTO
     {

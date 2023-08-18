@@ -34,9 +34,12 @@ namespace BeautyCenter.Controllers
         public async Task<IActionResult> AddImage([FromForm] ImageFile image)
         {
             //CreateImage create = new CreateImage();
+            string imageURL = string.Empty;
+            string hosturl = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
             try
             {
                 string FilePath = GetFilePath(image.Create.Name);
+
                 if (!System.IO.Directory.Exists(FilePath))
                 {
                     System.IO.Directory.CreateDirectory(FilePath);
@@ -50,7 +53,7 @@ namespace BeautyCenter.Controllers
                 {
                     await image.file.CopyToAsync(stream);
                     var result = _mapper.Map<Image>(image.Create);
-                    result.URL = url;
+                    result.URL = hosturl + "\\Upload\\image\\" + image.Create.Name + "\\" + image.Create.Name + ".png"; 
                     await _unitOfWork.Image.Insert(result);
                     await _unitOfWork.Save();
                     return Ok();
@@ -64,9 +67,10 @@ namespace BeautyCenter.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllImage()
         {
-
+           
             var image = await _unitOfWork.Image.GetAll();
             var result = _mapper.Map<IList<ImageDTO>>(image);
+
             return Ok(result);
         }
         [HttpGet]

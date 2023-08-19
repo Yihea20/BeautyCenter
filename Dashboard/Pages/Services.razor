@@ -1,0 +1,22 @@
+﻿@inject HttpClient httpClient
+@page "/services"
+@using BeautyCenter.Models;
+<PageTitle>Services</PageTitle>
+<h3>Services</h3>
+@*@foreach (var service in services)
+{
+    <div>
+        <h4>@service.Name</h4>
+
+    </div>
+}*@
+@code {
+
+    //private List<Service> services;
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //   services = await httpClient.GetFromJsonAsync<List<Service>>("https://localhost:7204/swagger/api/services");
+    //}
+}
+

@@ -1,0 +1,23 @@
+﻿@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+
+<button class="btn btn-light" style="color:#F6A2B3;" @onclick="IncrementCount">All Center</button>
+
+<button class="btn btn-primary" style="background-color: @buttonColor;" @onclick="ChangeButtonColor">Link</button>
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+    public string buttonColor = "#F6A2B3"; // لون الخلفية الأصلي للزر
+
+    private void ChangeButtonColor()
+    {
+       /// buttonColor = "#111111"; // تغيير لون الخلفية بعد النقر
+    }
+}

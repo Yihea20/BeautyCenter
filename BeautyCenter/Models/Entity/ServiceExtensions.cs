@@ -11,10 +11,11 @@ namespace BeautyCenter.Models.Entity
 {
     public static class ServiceExtensions
     {
-        public static void ConfigureNotification(this IServiceCollection services)
+        
+        public static void ConfigureNotification(this IServiceCollection services ,IWebHostEnvironment environment)
         {
-            var order = GoogleCredential.FromFile("C:\\Users\\Mona\\Desktop\\b\\BeautyCenter\\BeautyCenter\\bin\\Debug\\net7.0\\firebase.json");
-            // var order = GoogleCredential.FromFile("C:\\Users\\yihea\\source\\repos\\BeautyCenter\\BeautyCenter\\firebase.json");
+           
+        var order = GoogleCredential.FromFile(environment.WebRootPath+"\\FireBase\\firebase.json");
             FirebaseApp.Create(new AppOptions { Credential = order, });
         }
         public static void ConfigureIdentity(this IServiceCollection services)

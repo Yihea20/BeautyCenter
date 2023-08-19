@@ -13,7 +13,7 @@ builder.Services.AddDbContext<BeautyDbContext>(op => op.UseSqlServer(builder.Con
 //builder.Services.AddAuthentication();
 //builder.Services.ConfigureIdentity();
 //builder.Services.ConfigureJwt(builder.Configuration);
-builder.Services.ConfigureNotification();
+builder.Services.ConfigureNotification(builder.Environment);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -80,7 +80,7 @@ if (app.Environment.IsDevelopment()||app.Environment.IsProduction())
         c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "BeautyCenterApi");
     });
 }
-
+app.UseStaticFiles();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

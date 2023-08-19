@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using static BeautyCenter.DTOs.CreateGallery;
 using static BeautyCenter.DTOs.CreateService;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BeautyCenter.Controllers
 {
@@ -34,6 +35,7 @@ namespace BeautyCenter.Controllers
         [HttpPost]
         public async Task<IActionResult> AddService([FromForm] ServiceFile service)
         {
+            string hosturl = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
             try
             {
                 string FilePath = GetFilePath(service.Create.Name);
@@ -50,7 +52,7 @@ namespace BeautyCenter.Controllers
                 {
                     await service.File.CopyToAsync(stream);
                     var result = _mapper.Map<Service>(service.Create);
-                    result.ImageURL = url;
+                    result.ImageURL = hosturl + "\\Upload\\image\\" + service.Create.Name + "\\" + service.Create.Name + ".png"; ;
                     await _unitOfWork.Service.Insert(result);
                     await _unitOfWork.Save();
                     return Ok();
@@ -81,7 +83,7 @@ namespace BeautyCenter.Controllers
             var service = await _unitOfWork.Service.GetAll(q=>q.Name==name);
 
             var result = _mapper.Map<IList<ServiceDTO>>(service);
-            return Ok(result); return Ok(result);
+            return Ok(result); 
         }
         [HttpGet]
         [Route("all_by_type")]

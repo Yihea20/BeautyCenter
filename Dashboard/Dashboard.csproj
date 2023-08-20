@@ -6,10 +6,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\ImageControl\" />
-    <Folder Include="Pages\GallaryControl\" />
-    <Folder Include="Pages\UserControl\" />
-  </ItemGroup>
-
 </Project>

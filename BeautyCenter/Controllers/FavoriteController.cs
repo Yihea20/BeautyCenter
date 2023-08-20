@@ -70,6 +70,14 @@ namespace BeautyCenter.Controllers
             await _unitOfWork.Save();
             return Ok();
         }
+
+        [HttpGet("{UserID}")]
+        public async Task<IActionResult> Favorite(int UserID)
+        {
+            var favorite = await _unitOfWork.Favorite.GetAll(x => x.UserID == UserID);
+            var result = _mapper.Map<IList<Favorite>>(favorite);
+            return Ok(result);
+        }
         [HttpGet("ServiceId")]
         public async Task<IActionResult> GetAllFavoriteService(int ServiceId)
         {

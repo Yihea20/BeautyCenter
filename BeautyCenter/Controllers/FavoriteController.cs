@@ -74,7 +74,7 @@ namespace BeautyCenter.Controllers
         [HttpGet("{UserID}")]
         public async Task<IActionResult> Favorite(int UserID)
         {
-            var favorite = await _unitOfWork.Favorite.GetAll(x => x.UserID == UserID);
+            var favorite = await _unitOfWork.Favorite.GetAll(x => x.UserID == UserID );
             var result = _mapper.Map<IList<Favorite>>(favorite);
             return Ok(result);
         }

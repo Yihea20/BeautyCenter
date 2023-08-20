@@ -1,0 +1,54 @@
+﻿@page "/user"
+@using Dashboard.Data
+@inject WeatherForecastService ForecastService
+<PageTitle>User</PageTitle>
+<h3>User</h3>
+
+<div class="input-group flex-nowrap">
+    <span class="input-group-text" id="addon-wrapping" style="background-color:#F6A2B3"><i class="oi oi-moon" style="color:whitesmoke"></i></span>
+    <input type="text" class="form-control" style="border-color:#F6A2B3" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
+        <a class="btn btn-primary me-md-2" href="/user/add" role="button" style="background-color:#F6A2B3"><i class="oi oi-plus">  Add User </i></a>
+    </div>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>point</th>
+            <th>CenterId</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var forecast in forecasts)
+        {
+            <tr>
+                <td>@forecast.Date.ToShortDateString()</td>
+                <td>@forecast.TemperatureC + @forecast.TemperatureF</td>
+                <td>@forecast.TemperatureF</td>
+                <td>@forecast.TemperatureF</td>
+                <td>
+                    <a class="btn btn-primary me-md-2" href="/user/view" role="button" style="border-color:beige;background-color:#F6A2B3">  <i class="oi oi-eye"></i> </a>
+                    <a class="btn btn-outline-info" role="button" href="/user/update" style="border-block-start-color:#F6A2B3;color:#F6A2B3;border-color:#F6A2B3"><i class="oi oi-pencil"></i></a>
+                    <a class="btn btn-outline-danger" role="button"><i class="oi oi-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@code {
+
+    private WeatherForecast[]? forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateOnly.FromDateTime(DateTime.Now));
+    }
+
+}
+

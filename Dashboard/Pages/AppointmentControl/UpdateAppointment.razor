@@ -1,0 +1,30 @@
+﻿@page "/Appointment/update"
+<PageTitle>UpdateAppointment</PageTitle>
+<h3>UpdateCenter</h3>
+<div class="container">
+    <form class="row g-3">
+    <label  class="form-label"> Id </label>
+   @* <input class="form-control" type="text" value="Readonly input here..." aria-label="1" readonly>*@
+    <div class="col-md-4">
+    <label class="form-label">Name</label>
+    <input type="text" class="form-control is-valid" value="Mark" required>
+    <div class="row">
+
+      <div class='col-sm-6'> OpenTime
+         <input type='time' style='color:#F6A2B3' class="form-control" alue="11:00:55" />
+      </div>
+     <div class='col-sm-6'>CloseTime
+         <input type='time' style='color:#F6A2B3' class="form-control" value="11:00:55" />
+      </div>
+
+      </div>
+      </div >
+
+  </form>
+  </div>
+@code {
+    public int Id { get; set; }
+        public string Name { get; set; }
+        public DateTime OpenTime { get; set; }
+        public DateTime CloseTime { get; set; }
+}

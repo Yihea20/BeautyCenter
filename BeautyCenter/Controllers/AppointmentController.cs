@@ -37,8 +37,9 @@ namespace BeautyCenter.Controllers
         public async Task<IActionResult> AddUserAppointment([FromBody] UserAppointment appointment)
         {
             var result = _mapper.Map<Appointment>(appointment);
-            await _unitOfWork.Appointment.Insert(result);
             result.Status = "Upcoming";
+            await _unitOfWork.Appointment.Insert(result);
+            
             await _unitOfWork.Save();
             return Ok();
         }
@@ -47,8 +48,9 @@ namespace BeautyCenter.Controllers
         public async Task<IActionResult> AddEmployeeAppointment([FromBody] EmployeeAppointment appointment)
         {
             var result = _mapper.Map<Appointment>(appointment);
-            await _unitOfWork.Appointment.Insert(result);
             result.Status = "Upcoming";
+            await _unitOfWork.Appointment.Insert(result);
+            
             await _unitOfWork.Save();
             return Ok();
         }

@@ -27,7 +27,8 @@ namespace BeautyCenter.Controllers
         [NonAction]
         private string GetFilePath(string name)
         {
-            return this.environment.WebRootPath + "\\Upload\\image\\" + name;
+
+            return this.environment.WebRootPath + "/Upload/image/" + name;
         }
         [HttpPost]
         public async Task<IActionResult> AddCenter([FromForm] CustomerImage customer)
@@ -40,7 +41,7 @@ namespace BeautyCenter.Controllers
                 {
                     System.IO.Directory.CreateDirectory(FilePath);
                 }
-                string url = FilePath + "\\" + customer.CreateCustomer.CostomerDetails + ".png";
+                string url = FilePath + "/" + customer.CreateCustomer.CostomerDetails + ".png";
                 if (System.IO.File.Exists(url))
                 {
                     System.IO.File.Delete(url);
@@ -49,7 +50,7 @@ namespace BeautyCenter.Controllers
                 {
                     await customer.File.CopyToAsync(stream);
                     var result = _mapper.Map<CustomerDet>(customer.CreateCustomer);
-                    result.ImageUrl = hosturl + "\\Upload\\image\\" + customer.CreateCustomer.CostomerDetails + "\\" + customer.CreateCustomer.CostomerDetails + ".png"; ;
+                    result.ImageUrl = hosturl + "/Upload/image/" + customer.CreateCustomer.CostomerDetails + "/" + customer.CreateCustomer.CostomerDetails + ".png"; ;
                     await _unitOfWork.CustomerDet.Insert(result);
                     await _unitOfWork.Save();
                     return Ok();

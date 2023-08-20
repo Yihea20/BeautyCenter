@@ -4,6 +4,7 @@ using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BeautyCenter.Controllers
 {
@@ -64,6 +65,14 @@ namespace BeautyCenter.Controllers
             _unitOfWork.User.Update(old);
             await _unitOfWork.Save();
             return Ok();
+        }
+        [HttpGet("{Favorite}")]
+        public async Task<IActionResult> GetUserFavorite(int Id)
+        {
+            var user = await _unitOfWork.Employee.GetAll(q => q.Id==Id,include:q=>q.Include(x=>x.Favorites));
+            var result = _mapper.Map<UserDTO>(user);
+            return Ok(result);
+
         }
         //[HttpPut("{id}")]
         //public async Task<IActionResult> UpdateUserpoint(int id, [FromBody] int point)

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeautyCenter.Migrations
 {
     [DbContext(typeof(BeautyDbContext))]
-    [Migration("20230817151143_notification1")]
-    partial class notification1
+    [Migration("20230820055822_Null1")]
+    partial class Null1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,16 +29,19 @@ namespace BeautyCenter.Migrations
 
             modelBuilder.Entity("BeautyCenter.Models.Appointment", b =>
                 {
-                    b.Property<int?>("EmployeeId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("ServiceId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Id")
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -46,14 +49,15 @@ namespace BeautyCenter.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserID")
-                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.HasKey("EmployeeId", "ServiceId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ServiceId");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("EmployeeId", "ServiceId");
+
+                    b.HasIndex("UserID", "ServiceId");
 
                     b.ToTable("Appointments");
                 });
@@ -319,6 +323,9 @@ namespace BeautyCenter.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
+                    b.Property<int>("TopServic")
+                        .HasColumnType("int");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -424,8 +431,7 @@ namespace BeautyCenter.Migrations
                     b.HasOne("BeautyCenter.Models.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("BeautyCenter.Models.Service", "Service")
                         .WithMany()
@@ -436,8 +442,7 @@ namespace BeautyCenter.Migrations
                     b.HasOne("BeautyCenter.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Employee");
 

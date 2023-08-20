@@ -10,18 +10,19 @@ namespace BeautyCenter.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Person>().UseTpcMappingStrategy();
+            modelBuilder.Entity<Appointment>().HasKey(q => q.Id);
             modelBuilder.Entity<User>().HasMany(vc => vc.ServicesOffers)
                          .WithMany(v => v.Users).UsingEntity<Appointment>(
                          vvc => vvc.HasOne(prop => prop.Service).WithMany().HasForeignKey(prop => prop.ServiceId).OnDelete(DeleteBehavior.Restrict),
                          vvc => vvc.HasOne(prop => prop.User).WithMany().HasForeignKey(prop => prop.UserID).OnDelete(DeleteBehavior.Restrict),
-                         vvc => vvc.HasKey(prop => new { prop.UserID, prop.ServiceId })
+                         vvc => vvc.HasIndex(prop => new { prop.UserID, prop.ServiceId })
                          );
 
             modelBuilder.Entity<Service>().HasMany(vc => vc.EmployeesHasService)
                            .WithMany(v => v.ServicesOffers).UsingEntity<Appointment>(
                            vvc => vvc.HasOne(prop => prop.Employee).WithMany().HasForeignKey(prop => prop.EmployeeId).OnDelete(DeleteBehavior.Restrict),
                            vvc => vvc.HasOne(prop => prop.Service).WithMany().HasForeignKey(prop => prop.ServiceId).OnDelete(DeleteBehavior.Restrict),
-                           vvc => vvc.HasKey(prop => new { prop.EmployeeId, prop.ServiceId })
+                           vvc => vvc.HasIndex(prop => new { prop.EmployeeId, prop.ServiceId })
                            );
           
             modelBuilder.Entity<Service>().HasMany(vc => vc.EmployeesCanDo)

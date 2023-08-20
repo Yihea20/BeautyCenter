@@ -18,7 +18,7 @@ namespace BeautyCenter.Models
         [ForeignKey(nameof(Gallery))]
         public int? GalleryId { get; set; }
         public Gallery? Gallery { get; set; }
-        public ICollection<Service>? ServicesOffers { get; set; }
+        public ICollection<Service> ServicesOffers { get; set; }
 
         public int Points { get; set; }
         public ICollection<Offers>? Offers { get; set; }

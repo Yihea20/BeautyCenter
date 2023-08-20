@@ -11,7 +11,8 @@ namespace BeautyCenter.DTOs
         public string Name { get; set; }
         public string details { get; set; }
         public string Type { get; set; }
-        
+        public int TopServic { get; set; }
+
         // [ForeignKey(nameof(CostomerDet))]
         //public int CostomerDetId { get; set; }
         //public CostomerDet CostomerDet { get; set; }

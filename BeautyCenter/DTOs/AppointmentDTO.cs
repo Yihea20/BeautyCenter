@@ -30,7 +30,7 @@ namespace BeautyCenter.DTOs
 
         public int ServiceId { set; get; }
         public string Status { set; get; }
-        public int UserID { set; get; }
+        public int EmployeeID { set; get; }
         public DateTime DateTime { get; set; }
 
 
@@ -39,7 +39,7 @@ namespace BeautyCenter.DTOs
 
         public int ServiceId { set; get; }
         public string Status { set; get; }
-        public int EmployeeId { set; get; }
+        public int UserID { set; get; }
         public DateTime DateTime { get; set; }
 
     }

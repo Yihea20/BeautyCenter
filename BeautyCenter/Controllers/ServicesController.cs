@@ -30,7 +30,7 @@ namespace BeautyCenter.Controllers
         [NonAction]
         private string GetFilePath(string name)
         {
-            return this.environment.WebRootPath + "\\Upload\\ServiceImage\\" + name;
+            return this.environment.WebRootPath + "/Upload/ServiceImage/" + name;
         }
         [HttpPost]
         public async Task<IActionResult> AddService([FromForm] ServiceFile service)
@@ -52,7 +52,7 @@ namespace BeautyCenter.Controllers
                 {
                     await service.File.CopyToAsync(stream);
                     var result = _mapper.Map<Service>(service.Create);
-                    result.ImageURL = hosturl + "\\Upload\\image\\" + service.Create.Name + "\\" + service.Create.Name + ".png"; ;
+                    result.ImageURL = hosturl + "/Upload/ServiceImage/" + service.Create.Name + "/" + service.Create.Name + ".png"; ;
                     await _unitOfWork.Service.Insert(result);
                     await _unitOfWork.Save();
                     return Ok();
@@ -72,6 +72,15 @@ namespace BeautyCenter.Controllers
         {
 
             var  service= await _unitOfWork.Service.GetAll();
+            var result = _mapper.Map<IList<ServiceDTO>>(service);
+            return Ok(result);
+        }
+        [HttpGet]
+        [Route("TopService")]
+        public async Task<IActionResult> GetTopServices()
+        {
+
+            var service = await _unitOfWork.Service.GetAll(orderBy:q=>q.OrderByDescending(x=>x.TopServic));
             var result = _mapper.Map<IList<ServiceDTO>>(service);
             return Ok(result);
         }

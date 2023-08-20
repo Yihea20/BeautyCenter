@@ -4,6 +4,7 @@ using BeautyCenter.Models.Entity;
 using BeautyCenter.Rebository;
 using BeautyCenter.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
@@ -80,8 +81,11 @@ if (app.Environment.IsDevelopment()||app.Environment.IsProduction())
         c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "BeautyCenterApi");
     });
 }
-app.UseStaticFiles();
+
+
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+
 app.UseAuthentication();
 app.UseAuthorization();
 

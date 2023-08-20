@@ -39,6 +39,15 @@ namespace BeautyCenter.Controllers
             var result = _mapper.Map<IList<EmployeeDTO>>(employee);
             return Ok(result);
         }
+        [HttpGet]
+        [Route("TopEmployee")]
+        public async Task<IActionResult> GetTopEmployee()
+        {
+
+            var employee = await _unitOfWork.Employee.GetAll(orderBy:q=>q.OrderByDescending(x=>x.Rate));
+            var result = _mapper.Map<IList<EmployeeDTO>>(employee);
+            return Ok(result);
+        }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {

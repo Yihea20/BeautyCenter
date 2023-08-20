@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BeautyCenter.Migrations
 {
     /// <inheritdoc />
-    public partial class Beauty : Migration
+    public partial class Null1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -216,6 +216,7 @@ namespace BeautyCenter.Migrations
                     Price = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TopServic = table.Column<int>(type: "int", nullable: false),
                     ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     details = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerDetId = table.Column<int>(type: "int", nullable: true),
@@ -241,16 +242,17 @@ namespace BeautyCenter.Migrations
                 name: "Appointments",
                 columns: table => new
                 {
-                    ServiceId = table.Column<int>(type: "int", nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false)
+                    ServiceId = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: true),
+                    EmployeeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Appointments", x => new { x.EmployeeId, x.ServiceId });
+                    table.PrimaryKey("PK_Appointments", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Appointments_Employees_EmployeeId",
                         column: x => x.EmployeeId,
@@ -314,6 +316,9 @@ namespace BeautyCenter.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DeviceToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Topic = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ServiceId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -390,14 +395,19 @@ namespace BeautyCenter.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Appointments_EmployeeId_ServiceId",
+                table: "Appointments",
+                columns: new[] { "EmployeeId", "ServiceId" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Appointments_ServiceId",
                 table: "Appointments",
                 column: "ServiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appointments_UserID",
+                name: "IX_Appointments_UserID_ServiceId",
                 table: "Appointments",
-                column: "UserID");
+                columns: new[] { "UserID", "ServiceId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CustomerDets_IdSepacificEmployee",

@@ -1,18 +1,58 @@
 ﻿@page "/appointment"
+@using Dashboard.Data
+@inject WeatherForecastService ForecastService
 <PageTitle>Appointment</PageTitle>
 
 <h3>Appointment</h3>
 
-<p role="status">Current count: @currentCount</p>
+<div class="input-group flex-nowrap">
+    <span class="input-group-text" id="addon-wrapping" style="background-color:#F6A2B3"><i class="oi oi-moon" style="color:whitesmoke"></i></span>
+    <input type="text" class="form-control" style="border-color:#F6A2B3" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end " >
+        <a class="btn btn-primary me-md-2" href="/Appointment/add" role="button" style="background-color:#F6A2B3"><i class="oi oi-plus">  Add Appointment </i></a>
+    </div>
+    </div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>User Name</th>
+            <th>Service</th>
+            <th>Employee Name</th>
+            <th>time</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var forecast in forecasts)
+        {
+            <tr>
+                <td>@forecast.Date.ToShortDateString()</td>
+                <td>@forecast.TemperatureC</td>
+                <td>@forecast.TemperatureF</td>
+                 <td>@forecast.TemperatureF</td>
+                <td>22:55:20</td>
+                <td>
+                     <a class="btn btn-primary me-md-2" href="/Appointment/view" role="button" style="background-color:#F6A2B3">  View </a>
+                    <a class="btn btn-outline-info"role="button"   href="/Appointment/update" style="border-block-start-color:#F6A2B3;color:#F6A2B3;border-color:#F6A2B3">Update</a>
+                    <a class="btn btn-outline-danger"   role="button">Delete</a>
+                    </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 @code {
-    private int currentCount = 0;
+     
+    private WeatherForecast[]? forecasts;
 
-    private void IncrementCount()
+    protected override async Task OnInitializedAsync()
     {
-        currentCount++;
+        forecasts = await ForecastService.GetForecastAsync(DateOnly.FromDateTime(DateTime.Now));
     }
+
 }
 

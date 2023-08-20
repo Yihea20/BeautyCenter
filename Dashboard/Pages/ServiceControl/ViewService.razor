@@ -1,0 +1,61 @@
+﻿@page "/servic/view"
+<h3>ViewService</h3>
+<PageTitle>ViewService</PageTitle>
+
+
+<div class="container">
+        
+    <div class="row">
+      <label  class="form-label"> Id</label>
+        <input type="number" class="form-control"  placeholder="Service Id" readonly> 
+      <label  class="form-label"> Price</label>
+        <input type="number" class="form-control"  placeholder="Service Price" readonly>
+    </div>
+    <div class="row">
+    <label class="form-label"> Name</label>
+        <input type="text" class="form-control"  placeholder="Service Name" readonly>
+
+      <label class="form-label"> Type </label>
+        <input type="text" class="form-control"  placeholder="Service Type" readonly>
+      </div>
+     <div>
+  <label for="formFile" class="form-label">image</label>
+  <img src="..." class="img-fluid" alt="...">
+  <div>
+      </div>
+          </div>
+          <label class="form-label"> details </label>
+        <input type="text" class="form-control"  placeholder="Service details" readonly>
+
+      <div class='col-sm-6'> CreatedDate
+         <input type='time' style='color:#F6A2B3' class="form-control"  />
+      </div>
+     
+     @*<div class="row">
+      <div class='col-sm-6'> CustomerId
+         <input type='number' style='color:#F6A2B3' class="form-control"  />
+      </div>
+      <div class='col-sm-6'>Customer Name
+         <input type='text' style='color:#F6A2B3' class="form-control"  />
+      </div>    
+   </div>*@
+
+    <div class="row">
+      <div class='col-sm-6'> EmployeeId
+         <input type='number' style='color:#F6A2B3' class="form-control" readonly/>
+      </div>
+      <div class='col-sm-6'>Employee Name
+         <input type='text' style='color:#F6A2B3' class="form-control" readonly/>
+      </div>
+    
+   </div>
+</div>
+@code {
+          
+        //public int ? CustomerDetId { get; set; }
+        //public CustomerDet? CustomerDet { get; set; }
+        //public ICollection<User>? Users { get; set; }
+      
+
+
+}

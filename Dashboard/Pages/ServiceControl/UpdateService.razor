@@ -1,0 +1,60 @@
+﻿@page "/servic/update"
+<h3>UpdateService</h3>
+<PageTitle>UpdateService</PageTitle>
+
+ <div class="container">
+        
+    <div class="row">
+      <label  class="form-label"> Id</label>
+        <input type="number" class="form-control" value="1" placeholder="Service Id">
+      <label  class="form-label"> Price</label>
+        <input type="number" class="form-control"  value="2"  placeholder="Service Price">
+    </div>
+    <div class="row">
+    <label class="form-label"> Name</label>
+        <input type="text" class="form-control"  value="Name"  placeholder="Service Name">
+
+      <label class="form-label"> Type </label>
+        <input type="text" class="form-control" value="Type"  placeholder="Service Type">
+      </div>
+   
+  <label for="formFile" class="form-label">image</label>
+  <input class="form-control" type="file" value="image"  id="formFile">
+
+        
+          <label class="form-label"> details </label>
+        <input type="text" class="form-control" value="details"  placeholder="Service details">
+
+      <div class='col-sm-6'> CreatedDate
+         <input type='time' style='color:#F6A2B3' value="CreatedDate"   class="form-control"  />
+      </div>
+     
+     @*<div class="row">
+      <div class='col-sm-6'> CustomerId
+         <input type='number' style='color:#F6A2B3' class="form-control"  />
+      </div>
+      <div class='col-sm-6'>Customer Name
+         <input type='text' style='color:#F6A2B3' class="form-control"  />
+      </div>    
+   </div>*@
+
+    <div class="row">
+      <div class='col-sm-6'> EmployeeId
+         <input type='number' style='color:#F6A2B3' class="form-control" id='datetimepicker4' />
+      </div>
+      <div class='col-sm-6'>Employee Name
+         <input type='text' style='color:#F6A2B3' class="form-control" id='datetimepicker4' />
+      </div>
+    
+   </div>
+</div>
+@code {
+          
+        //public int ? CustomerDetId { get; set; }
+        //public CustomerDet? CustomerDet { get; set; }
+        //public ICollection<User>? Users { get; set; }
+      
+
+
+}
+

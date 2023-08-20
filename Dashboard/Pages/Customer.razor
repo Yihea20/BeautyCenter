@@ -1,40 +1,17 @@
 ﻿@page "/customer"
-@using Dashboard.Data
-@inject WeatherForecastService ForecastService
-<PageTitle>Customer</PageTitle>
-<h3>Customer</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>===</th>
-      
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var forecast in forecasts)
-        {
-            <tr>
-                <td>@forecast.Date.ToShortDateString()</td>
-                <td>@forecast.TemperatureC</td>
-                <td>@forecast.TemperatureF</td>
-                <td>
-                    <button class="btn btn-info" style="background-color:#F6A2B3;color:white;border-color:#F6A2B3">View</button>
-                    <button class="btn btn-outline-info" style="color:white;border-color:#F6A2B3">Update</button>
-                    <button class="btn btn-outline-danger">Delete</button>
-                    </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 @code {
-    private WeatherForecast[]? forecasts;
+    private int currentCount = 0;
 
-    protected override async Task OnInitializedAsync()
+    private void IncrementCount()
     {
-        forecasts = await ForecastService.GetForecastAsync(DateOnly.FromDateTime(DateTime.Now));
+        currentCount++;
     }
-
 }

@@ -34,7 +34,17 @@ namespace BeautyCenter.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddFavorite([FromBody] FavoriteDTO favorite)
+        [Route("add_favorite_service")]
+        public async Task<IActionResult> AddServiceFavorite([FromBody] ServiceCreateFavorite favorite)
+        {
+            var result = _mapper.Map<Favorite>(favorite);
+            await _unitOfWork.Favorite.Insert(result);
+            await _unitOfWork.Save();
+            return Ok();
+        }
+        [HttpPost]
+        [Route("add_favorite_Employee")]
+        public async Task<IActionResult> AddEmployeeFavorite([FromBody] EmployeeCreateFavorite favorite)
         {
             var result = _mapper.Map<Favorite>(favorite);
             await _unitOfWork.Favorite.Insert(result);
@@ -75,14 +85,14 @@ namespace BeautyCenter.Controllers
         public async Task<IActionResult> Favorite(int UserID)
         {
             var favorite = await _unitOfWork.Favorite.GetAll(x => x.UserID == UserID );
-            var result = _mapper.Map<IList<Favorite>>(favorite);
+            var result = _mapper.Map<IList<FavoriteDTO>>(favorite);
             return Ok(result);
         }
         [HttpGet("ServiceId")]
         public async Task<IActionResult> GetAllFavoriteService(int ServiceId)
         {
             var favorite = await _unitOfWork.Favorite.GetAll(x => x.ServiceId == ServiceId);
-            var result = _mapper.Map<IList<Favorite>>(favorite);
+            var result = _mapper.Map<IList<FavoriteDTO>>(favorite);
             return Ok(result);
         }
 
@@ -90,7 +100,7 @@ namespace BeautyCenter.Controllers
         public async Task<IActionResult> GetAllFavoriteEmployee(int EmployeeId)
         {
             var favorite = await _unitOfWork.Favorite.GetAll(x => x.EmployeeId == EmployeeId);
-            var result = _mapper.Map<IList<Favorite>>(favorite);
+            var result = _mapper.Map<IList<FavoriteDTO>>(favorite);
             return Ok(result);
         }
 

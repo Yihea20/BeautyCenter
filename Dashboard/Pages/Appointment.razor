@@ -1,57 +1,64 @@
 ﻿@page "/appointment"
-@using Dashboard.Data
-@inject WeatherForecastService ForecastService
+@using AutoMapper;
+@inject IHttpClientFactory _Http
+@inject IMapper _mapper
 <PageTitle>Appointment</PageTitle>
 
 <h3>Appointment</h3>
+@if (string.IsNullOrWhiteSpace(error) == false)
+{
+    <div class="h2">@error</div>
+}else if(appointment is null)
+{
+    <div class="h4">Loading....</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead class="thead-dark">
 
-<div class="input-group flex-nowrap">
-    <span class="input-group-text" id="addon-wrapping" style="background-color:#F6A2B3"><i class="oi oi-moon" style="color:whitesmoke"></i></span>
-    <input type="text" class="form-control" style="border-color:#F6A2B3" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
-
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end " >
-        <a class="btn btn-primary me-md-2" href="/Appointment/add" role="button" style="background-color:#F6A2B3"><i class="oi oi-plus">  Add Appointment </i></a>
-    </div>
-    </div>
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>User Name</th>
-            <th>Service</th>
-            <th>Employee Name</th>
-            <th>time</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var forecast in forecasts)
-        {
             <tr>
-                <td>@forecast.Date.ToShortDateString()</td>
-                <td>@forecast.TemperatureC</td>
-                <td>@forecast.TemperatureF</td>
-                 <td>@forecast.TemperatureF</td>
-                <td>22:55:20</td>
-                <td>
-                    <a class="btn btn-primary me-md-2" href="/Appointment/view" role="button" style="border-color:beige;background-color:#F6A2B3">  <i class="oi oi-eye"></i> </a>
-                    <a class="btn btn-outline-info" role="button" href="/Appointment/update" style="border-block-start-color:#F6A2B3;color:#F6A2B3;border-color:#F6A2B3"><i class="oi oi-pencil"></i></a>
-                    <a class="btn btn-outline-danger" role="button"><i class="oi oi-trash"></i></a>
-                    </td>
+                <th>Id</th>
+                <th>DateTime</th>
+                <th>Status</th>
+                <th>ServiceId</th>
+                <th>UserId</th>
+                <th>EmployeeId</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach(var b in appointment.Appoinments){
+            <tr>
+                <td>b.Id</td>
+                <td>b.DateTime</td>
+                <td>b.Status</td>
+                <td>b.ServiceId</td>
+                <td>b.UserID</td>
+                <td>b.EmployeeId</td>
+            </tr>}
+        </tbody>
+    </table>
+}
 
 @code {
-     
-    private WeatherForecast[]? forecasts;
-
+    Appontment appointment;
+    string error;
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await ForecastService.GetForecastAsync(DateOnly.FromDateTime(DateTime.Now));
+        var request = new HttpRequestMessage(HttpMethod.Get,"http://yihea20-001-site1.ftempurl.com/api/Appointment");
+        var client = _Http.CreateClient();
+        HttpResponseMessage respons = await client.SendAsync(request);
+        if (respons.IsSuccessStatusCode)
+        {
+            var json = await respons.Content.ReadFromJsonAsync<Appontment>();
+            var result=
+            appointment = json;
+            error = null;
+        }
+        else
+        {
+            error = $"There was an error getting our Appointment :{respons.ReasonPhrase}";
+        }
     }
 
 }

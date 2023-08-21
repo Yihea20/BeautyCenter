@@ -3,6 +3,7 @@ using BeautyCenter.DTOs;
 using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using static BeautyCenter.DTOs.CreateAppointment;
 
 
@@ -26,7 +27,7 @@ namespace BeautyCenter.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAppointment()
         {
-            var appointment = await _unitOfWork.Appointment.GetAll();
+            var appointment = await _unitOfWork.Appointment.GetAll(include:q=>q.Include(x=>x.Service));
             var result = _mapper.Map<IList<Appointment>>(appointment);
             return Ok(result);
         }

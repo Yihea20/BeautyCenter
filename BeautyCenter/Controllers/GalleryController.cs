@@ -5,7 +5,7 @@ using BeautyCenter.Models;
 using BeautyCenter.Rebository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
 using static BeautyCenter.DTOs.CreateGallery;
 
 namespace BeautyCenter.Controllers
@@ -36,7 +36,7 @@ namespace BeautyCenter.Controllers
         public async Task<IActionResult> GetAllGallery()
         {
 
-            var gallery = await _unitOfWork.Gallery.GetAll();
+            var gallery = await _unitOfWork.Gallery.GetAll(include:q=>q.Include(x=>x.Images));
             var result = _mapper.Map<IList<GalleryDTO>>(gallery);
             return Ok(result);
         }
@@ -79,7 +79,7 @@ namespace BeautyCenter.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetGallery(int id)
         {
-            var gallery = await _unitOfWork.Gallery.Get(q => q.Id == id);
+            var gallery = await _unitOfWork.Gallery.Get(q => q.Id == id, include: q => q.Include(x => x.Images));
             var result = _mapper.Map<GalleryDTO>(gallery);
             return Ok(result);
         }

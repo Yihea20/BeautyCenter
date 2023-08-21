@@ -28,10 +28,15 @@ namespace BeautyCenter.Models.Entity
             CreateMap<Service, UpdateService>().ReverseMap();
             CreateMap<Favorite, CreateFavorite>().ReverseMap();
             CreateMap<Favorite, FavoriteDTO>().ReverseMap();
+            CreateMap<Favorite, EmployeeCreateFavorite>().ReverseMap();
+            CreateMap<Favorite, ServiceCreateFavorite>().ReverseMap();
             CreateMap<Appointment, CreateAppointment>().ReverseMap();
             CreateMap<Appointment, UserAppointment>().ReverseMap();
             CreateMap<Appointment, EmployeeAppointment>().ReverseMap();
             CreateMap<Appointment, AppointmentDTO>().ReverseMap();
+            CreateMap<ServiceEmployee, ServiceEmployeeDTO>().ReverseMap();
+
+            CreateMap<ServiceEmployee, CreateServiceEmployeeDTO>().ReverseMap();
             CreateMap<Employee, EmployeeDTO>().ReverseMap();
             CreateMap<Employee, CreateEmployee>().ReverseMap();
             CreateMap<CustomerDet, CustomerDTO>().ReverseMap();

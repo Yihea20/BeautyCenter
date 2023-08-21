@@ -1,5 +1,6 @@
 ﻿@page "/appointment"
 @using AutoMapper;
+@using Dashboard.DTOs;
 @inject IHttpClientFactory _Http
 @inject IMapper _mapper
 <PageTitle>Appointment</PageTitle>
@@ -27,21 +28,21 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach(var b in appointment.Appoinments){
+            @foreach(var b in appointment){
             <tr>
-                <td>b.Id</td>
-                <td>b.DateTime</td>
-                <td>b.Status</td>
-                <td>b.ServiceId</td>
-                <td>b.UserID</td>
-                <td>b.EmployeeId</td>
+                <td>@b.Id</td>
+                <td>@b.DateTime</td>
+                <td>@b.Status</td>
+                <td>@b.ServiceId</td>
+                <td>@b.UserID</td>
+                <td>@b.employeeId</td>
             </tr>}
         </tbody>
     </table>
 }
 
 @code {
-    Appontment appointment;
+    IList<Appointments>appointment;
     string error;
     protected override async Task OnInitializedAsync()
     {
@@ -50,8 +51,8 @@ else
         HttpResponseMessage respons = await client.SendAsync(request);
         if (respons.IsSuccessStatusCode)
         {
-            var json = await respons.Content.ReadFromJsonAsync<Appontment>();
-            var result=
+            var json = await respons.Content.ReadFromJsonAsync<IList<Appointments>>();
+           // var result = _mapper.Map<Appointments>(json);
             appointment = json;
             error = null;
         }

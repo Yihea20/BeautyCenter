@@ -6,20 +6,20 @@ namespace Dashboard.Data
 {
    
 
-        public class Appontment
+        public class Appointments
         {
-            public Bokking[] Appoinments { get; set; }
-        }
+        public int Id { get; set; }
+        public DateTime DateTime { get; set; }
+        public string Status { get; set; }
+        public int ServiceId { get; set; }
+        public int? UserID { get; set; }
+        public int? employeeId { get; set; }
+    }
 
         public class Bokking
         {
-        [JsonPropertyName("Id")]
-            public int Id { get; set; }
-            public DateTime DateTime { get; set; }
-            public string Status { get; set; }
-            public int ServiceId { get; set; }
-            public int? UserID { get; set; }
-           public int? employeeId { get; set; }
+        
+            
              }
 
        

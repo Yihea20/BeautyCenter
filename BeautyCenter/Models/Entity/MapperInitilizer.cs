@@ -8,12 +8,18 @@ using static BeautyCenter.DTOs.CreateAppointment;
 using static BeautyCenter.DTOs.CreateEmployee;
 using static BeautyCenter.DTOs.CreateCustomer;
 using static BeautyCenter.DTOs.CreateGallery;
+using static BeautyCenter.DTOs.LikeDto;
+
 namespace BeautyCenter.Models.Entity
 {
     public class MapperInitilizer : Profile
     {
         public MapperInitilizer()
         {
+            CreateMap<Review, ReviewDTO>().ReverseMap();
+            CreateMap<Review, LikeDto>().ReverseMap();
+            CreateMap<Review, CreateEmployeeReview>().ReverseMap();
+            CreateMap<Review, CreateServiceReview>().ReverseMap();
             CreateMap<Notification, CreateNotificationForUser>().ReverseMap();
             CreateMap<Notification, CreateNotificationForGroup>().ReverseMap();
             CreateMap<Notification, NotificationDTO>().ReverseMap();

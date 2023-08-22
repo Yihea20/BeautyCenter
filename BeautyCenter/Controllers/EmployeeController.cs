@@ -4,6 +4,7 @@ using BeautyCenter.IRebository;
 using BeautyCenter.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using static BeautyCenter.DTOs.CreateEmployee;
 using static BeautyCenter.DTOs.CreateGallery;
 
@@ -44,7 +45,7 @@ namespace BeautyCenter.Controllers
         public async Task<IActionResult> GetTopEmployee()
         {
 
-            var employee = await _unitOfWork.Employee.GetAll(orderBy:q=>q.OrderByDescending(x=>x.Rate));
+            var employee = await _unitOfWork.Employee.GetAll(orderBy:q=>q.OrderByDescending(x=>x.Rate), include: q => q.Include(x => x.ServicesCanDo), includee: q => q.Include(x => x.Reviews));
             var result = _mapper.Map<IList<EmployeeDTO>>(employee);
             return Ok(result);
         }
@@ -60,11 +61,25 @@ namespace BeautyCenter.Controllers
             }
             else
             {
-                await _unitOfWork.Employee.Delete(id);
-                await _unitOfWork.Save();
+              var del=   _unitOfWork.Favorite.Get(q => q.EmployeeId==id);
+                if (del != null)
+                {
+                     _unitOfWork.Favorite.Delete(del.Id);
+                     _unitOfWork.Employee.Delete(id);
+                    await _unitOfWork.Save();
 
 
-                return Ok();
+                    return Ok();
+                }
+                else
+                {
+                    await _unitOfWork.Employee.Delete(id);
+                    await _unitOfWork.Save();
+
+
+                    return Ok();
+
+                }
             }
         }
         [HttpPut("{id}")]
@@ -85,10 +100,19 @@ namespace BeautyCenter.Controllers
             return Ok(result);
 
         }
+        [HttpGet]
+            [Route("Id")]
+        public async Task<IActionResult> EmployeeById(int id)
+        {
+            var employee = await _unitOfWork.Employee.Get(q => q.Id==id,include:q=>q.Include(x=>x.ServicesCanDo),includee:q=>q.Include(x=>x.Reviews));
+            var result = _mapper.Map<EmployeeDTO>(employee);
+            return Ok(result);
+
+        }
         [HttpPost("{LastName}")]
         public async Task<IActionResult> EmployeeByLastname(String LastName)
         {
-            var employee = await _unitOfWork.Employee.GetAll(q => q.LastName == LastName);
+            var employee = await _unitOfWork.Employee.GetAll(q => q.LastName == LastName, include: q => q.Include(x => x.ServicesCanDo), includee: q => q.Include(x => x.Reviews));
             var result = _mapper.Map<IList<EmployeeDTO>>(employee);
             return Ok(result);
 

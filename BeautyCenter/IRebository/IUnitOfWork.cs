@@ -6,6 +6,7 @@ namespace BeautyCenter.IRebository
     public interface IUnitOfWork : IDisposable
     {
         public IGenericRepository<Appointment> Appointment { get; }
+        public IGenericRepository<Review> Review { get; }
         public IGenericRepository<Center> Center { get; }
         public IGenericRepository<CustomerDet> CustomerDet { get; }
         public IGenericRepository<Favorite> Favorite { get; }

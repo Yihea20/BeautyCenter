@@ -1,20 +1,23 @@
 ﻿@page "/Center/add"
+@using System.Text.Json;
+@using BlazorInputFile;
+@inject IMapper _mapper
+@inject IHttpClientFactory _http
+@inject HttpClient Http
 <h3>AddCenter</h3>
 <PageTitle><h3>AddCenter</h3>
 </PageTitle>
 <div class="container">
-  <label  class="form-label"> Id</label>
-  <input type="number" class="form-control"  placeholder="Center Id">
     <label class="form-label"> Name</label>
-  <input type="text" class="form-control"  placeholder="Center Name">
+  <input type="text" class="form-control"  placeholder="Center Name"@bind="@create.Name">
    <div class="row">
       <div class='col-sm-6'> OpenTime
-         <input type='time' style='color:#F6A2B3' class="form-control" id='datetimepicker4' />
+            <input type='time' style='color:#F6A2B3' class="form-control" id='datetimepicker4' @bind="@create.OpenTime" />
       </div>
       <div class='col-sm-6'>CloseTime
-         <input type='time' style='color:#F6A2B3' class="form-control" id='datetimepicker4' />
+            <input type='time' style='color:#F6A2B3' class="form-control" id='datetimepicker4' @bind="@create.CloseTime" />
       </div>
-    
+        <button type="submit" @onclick="OnClick">submit</button>
    </div>
 </div>
 @* Update
@@ -28,8 +31,27 @@
   </div>*@
 
 @code {
-    public int Id { get; set; }
-        public string Name { get; set; }
-        public DateTime OpenTime { get; set; }
-        public DateTime CloseTime { get; set; }
+    CreateCenter create = new CreateCenter();
+    public async Task OnClick()
+    {
+        //var request = new HttpRequestMessage(HttpMethod.Post, "http://yihea20-001-site1.ftempurl.com/api/Appointment");
+        //var client = _http.CreateClient();
+        //HttpResponseMessage respons = await client.SendAsync(request);
+        //if (respons.IsSuccessStatusCode)
+        //{
+        // var result = _mapper.Map<Service>(service);
+        //result.TopServic = 3;
+        //result.ImageURL = "http://yihea20-001-site1.ftempurl.com/Upload/ServiceImage/yihea/yihea.png";
+        //result.Id = 5;
+        // serviceFile.content = ;
+       // var json = JsonSerializer.Serialize(serviceFile);
+
+        var respons = await Http.PostAsJsonAsync("http://yihea20-001-site1.ftempurl.com/api/Center", create);
+        if (respons.IsSuccessStatusCode)
+        {
+
+            Console.WriteLine("It Works");
+        }
+    }
+
 }

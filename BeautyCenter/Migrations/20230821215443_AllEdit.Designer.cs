@@ -4,6 +4,7 @@ using BeautyCenter.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeautyCenter.Migrations
 {
     [DbContext(typeof(BeautyDbContext))]
-    partial class BeautyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230821215443_AllEdit")]
+    partial class AllEdit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,7 +120,10 @@ namespace BeautyCenter.Migrations
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EmployeeId1")
+                    b.Property<int?>("EmployeeId2")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ManagerId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ServiceId")
@@ -128,11 +134,11 @@ namespace BeautyCenter.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId")
-                        .IsUnique()
-                        .HasFilter("[EmployeeId] IS NOT NULL");
+                    b.HasIndex("EmployeeId");
 
-                    b.HasIndex("EmployeeId1");
+                    b.HasIndex("EmployeeId2");
+
+                    b.HasIndex("ManagerId");
 
                     b.HasIndex("ServiceId");
 
@@ -492,13 +498,17 @@ namespace BeautyCenter.Migrations
             modelBuilder.Entity("BeautyCenter.Models.Favorite", b =>
                 {
                     b.HasOne("BeautyCenter.Models.Employee", "Employee")
-                        .WithOne()
-                        .HasForeignKey("BeautyCenter.Models.Favorite", "EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
 
                     b.HasOne("BeautyCenter.Models.Employee", null)
                         .WithMany("Favorites")
-                        .HasForeignKey("EmployeeId1");
+                        .HasForeignKey("EmployeeId2")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BeautyCenter.Models.Manager", null)
+                        .WithMany("Favorites")
+                        .HasForeignKey("ManagerId");
 
                     b.HasOne("BeautyCenter.Models.Service", "Service")
                         .WithMany()
@@ -684,6 +694,8 @@ namespace BeautyCenter.Migrations
 
             modelBuilder.Entity("BeautyCenter.Models.Manager", b =>
                 {
+                    b.Navigation("Favorites");
+
                     b.Navigation("Offers");
 
                     b.Navigation("ServicesOffers");

@@ -4,6 +4,7 @@ using BeautyCenter.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeautyCenter.Migrations
 {
     [DbContext(typeof(BeautyDbContext))]
-    partial class BeautyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230822113006_add")]
+    partial class add
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -120,6 +123,9 @@ namespace BeautyCenter.Migrations
                     b.Property<int?>("EmployeeId1")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ManagerId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("ServiceId")
                         .HasColumnType("int");
 
@@ -133,6 +139,8 @@ namespace BeautyCenter.Migrations
                         .HasFilter("[EmployeeId] IS NOT NULL");
 
                     b.HasIndex("EmployeeId1");
+
+                    b.HasIndex("ManagerId");
 
                     b.HasIndex("ServiceId");
 
@@ -500,6 +508,10 @@ namespace BeautyCenter.Migrations
                         .WithMany("Favorites")
                         .HasForeignKey("EmployeeId1");
 
+                    b.HasOne("BeautyCenter.Models.Manager", null)
+                        .WithMany("Favorites")
+                        .HasForeignKey("ManagerId");
+
                     b.HasOne("BeautyCenter.Models.Service", "Service")
                         .WithMany()
                         .HasForeignKey("ServiceId");
@@ -684,6 +696,8 @@ namespace BeautyCenter.Migrations
 
             modelBuilder.Entity("BeautyCenter.Models.Manager", b =>
                 {
+                    b.Navigation("Favorites");
+
                     b.Navigation("Offers");
 
                     b.Navigation("ServicesOffers");

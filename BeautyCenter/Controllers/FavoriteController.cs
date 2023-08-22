@@ -5,6 +5,7 @@ using BeautyCenter.Models;
 using BeautyCenter.Rebository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using static BeautyCenter.DTOs.CreateEmployee;
 using static BeautyCenter.DTOs.CreateFavorite;
 
@@ -84,14 +85,14 @@ namespace BeautyCenter.Controllers
         [HttpGet("{UserID}")]
         public async Task<IActionResult> Favorite(int UserID)
         {
-            var favorite = await _unitOfWork.Favorite.GetAll(x => x.UserID == UserID );
+            var favorite = await _unitOfWork.Favorite.GetAll(x => x.UserID == UserID , include: q => q.Include(x => x.Service), includee: q => q.Include(x => x.Employee));
             var result = _mapper.Map<IList<FavoriteDTO>>(favorite);
             return Ok(result);
         }
         [HttpGet("ServiceId")]
         public async Task<IActionResult> GetAllFavoriteService(int ServiceId)
         {
-            var favorite = await _unitOfWork.Favorite.GetAll(x => x.ServiceId == ServiceId);
+            var favorite = await _unitOfWork.Favorite.GetAll(x => x.ServiceId == ServiceId,include:q=>q.Include(x=>x.Service));
             var result = _mapper.Map<IList<FavoriteDTO>>(favorite);
             return Ok(result);
         }
@@ -99,7 +100,7 @@ namespace BeautyCenter.Controllers
         [HttpGet("EmployeeId")]
         public async Task<IActionResult> GetAllFavoriteEmployee(int EmployeeId)
         {
-            var favorite = await _unitOfWork.Favorite.GetAll(x => x.EmployeeId == EmployeeId);
+            var favorite = await _unitOfWork.Favorite.GetAll(x => x.EmployeeId == EmployeeId, include: q => q.Include(x => x.Employee));
             var result = _mapper.Map<IList<FavoriteDTO>>(favorite);
             return Ok(result);
         }

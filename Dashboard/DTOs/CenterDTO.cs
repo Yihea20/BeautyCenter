@@ -1,7 +1,7 @@
 ﻿using BeautyCenter.Models;
 using System.Text.Json.Serialization;
 
-namespace BeautyCenter.DTOs
+namespace Dashboard.DTOs
 {
     public class CreateCenter {
         public string Name { get; set; }

@@ -11,6 +11,7 @@ namespace BeautyCenter.Rebository
             _context = context;
         }
         private IGenericRepository<Appointment> _Appointment;
+        private IGenericRepository<Review> _Review;
         private IGenericRepository<Center> _Center;
         private IGenericRepository<CustomerDet> _CustomerDet; 
         private IGenericRepository<Favorite> _Favorite;
@@ -36,6 +37,7 @@ namespace BeautyCenter.Rebository
         public IGenericRepository<Image> Image => _Image??=new GenericRepository<Image>(_context);
         public IGenericRepository<User> User =>_User??=new GenericRepository<User>(_context);
         public IGenericRepository<TimeModel> TimeModel => _TimeModel ??= new GenericRepository<TimeModel>(_context);
+        public IGenericRepository<Review>Review=>_Review??=new GenericRepository<Review>(_context);
         public void Dispose()
         {
             _context.Dispose();

@@ -110,26 +110,15 @@ namespace BeautyCenter.Controllers
             var service = await _unitOfWork.Service.Get(q => q.Id == id);
 
 
-            try
-            {
-
-                if (System.IO.File.Exists(service.ImageURL))
-                {
-                    System.IO.File.Delete(service.ImageURL);
+           
                     await _unitOfWork.Service.Delete(id);
                     await _unitOfWork.Save();
 
                     return Ok();
-                }
-                else
-                {
-
-
-                    return NotFound();
-                }
+               
             }
-            catch (Exception e) { return BadRequest(); }
-        }
+            
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateService(int id, [FromBody] CreateService ServiceDto) 
         { 

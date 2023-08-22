@@ -95,6 +95,14 @@ namespace BeautyCenter.Controllers
             return Ok(result);
 
         }
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> AppointmentById(int Id)
+        {
+            var Appointment = await _unitOfWork.Appointment.GetAll(q => q.Id==Id);
+            var result = _mapper.Map<IList<AppointmentDTO>>(Appointment);
+            return Ok(result);
+
+        }
         //[HttpPut("{Status}")]
         //public async Task<IActionResult> DeleteAppointment(String Status, [FromBody] CreateAppointment AppointmentDto)
         //{
@@ -106,7 +114,7 @@ namespace BeautyCenter.Controllers
         //    return Ok();
 
         //}
-     
+
 
     }
 }

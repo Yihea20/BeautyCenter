@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BeautyCenter.DTOs
+namespace Dashboard.DTOs
 {
    
     public class CreateService
@@ -31,6 +31,6 @@ namespace BeautyCenter.DTOs
     }
     public class ServiceFile { 
     public CreateService Create { get; set; }
-        public IFormFile File { set; get; }
+        public MultipartFormDataContent content { set; get; }
     }
 }

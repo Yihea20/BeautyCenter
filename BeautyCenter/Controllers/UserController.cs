@@ -69,7 +69,17 @@ namespace BeautyCenter.Controllers
         [HttpGet("{Favorite}")]
         public async Task<IActionResult> GetUserFavorite(int Id)
         {
-            var user = await _unitOfWork.Employee.GetAll(q => q.Id==Id,include:q=>q.Include(x=>x.Favorites));
+            var user = await _unitOfWork.User.GetAll(q => q.Id==Id,include:q=>q.Include(x=>x.Favorites));
+            var result = _mapper.Map<UserDTO>(user);
+            return Ok(result);
+
+        }
+
+        [HttpGet]
+        [Route("Id")]
+        public async Task<IActionResult> GetUserbyId(int Id)
+        {
+            var user = await _unitOfWork.User.Get(q => q.Id == Id, include: q => q.Include(x => x.Favorites));
             var result = _mapper.Map<UserDTO>(user);
             return Ok(result);
 

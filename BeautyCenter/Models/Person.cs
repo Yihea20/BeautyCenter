@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace BeautyCenter.Models
 {
@@ -22,7 +23,7 @@ namespace BeautyCenter.Models
 
         public int Points { get; set; }
         public ICollection<Offers>? Offers { get; set; }
-        public ICollection<Favorite>? Favorites { get; set; }
+       
 
     }
 }

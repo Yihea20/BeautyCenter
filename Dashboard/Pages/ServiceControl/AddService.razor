@@ -1,60 +1,96 @@
 ﻿@page "/servic/add"
+@using System.Text.Json;
+@using BlazorInputFile;
+@inject IMapper _mapper
+@inject IHttpClientFactory _http
+ @inject HttpClient Http 
 <h3>AddService</h3>
 <PageTitle>AddService</PageTitle>
 
     <div class="container">
         
     <div class="row">
-      <label  class="form-label"> Id</label>
-        <input type="number" class="form-control"  placeholder="Service Id">
-      <label  class="form-label"> Price</label>
-        <input type="number" class="form-control"  placeholder="Service Price">
+       <label  class="form-label"> Price</label>
+        <input type="number" class="form-control" placeholder="Service Price" @bind="@Create.Price">
     </div>
     <div class="row">
     <label class="form-label"> Name</label>
-        <input type="text" class="form-control"  placeholder="Service Name">
+        <input type="text" class="form-control" placeholder="Service Name" @bind="@Create.Name">
 
       <label class="form-label"> Type </label>
-        <input type="text" class="form-control"  placeholder="Service Type">
+        <input type="text" class="form-control" placeholder="Service Type" @bind="@Create.Type">
       </div>
-   </div>
+   
   <label for="formFile" class="form-label">image</label>
-  <input class="form-control" type="file" id="formFile">
+  <BlazorInputFile.InputFile class="form-control"  type="file" id="formFile" />
 
         
           <label class="form-label"> details </label>
-        <input type="text" class="form-control"  placeholder="Service details">
+    <input type="text" class="form-control" placeholder="Service details" @bind="@Create.details">
 
       <div class='col-sm-6'> CreatedDate
-         <input type='time' style='color:#F6A2B3' class="form-control"  />
+         <input type='time' style='color:#F6A2B3' class="form-control"/>
       </div>
-     
-     @*<div class="row">
-      <div class='col-sm-6'> CustomerId
-         <input type='number' style='color:#F6A2B3' class="form-control"  />
-      </div>
-      <div class='col-sm-6'>Customer Name
-         <input type='text' style='color:#F6A2B3' class="form-control"  />
-      </div>    
-   </div>*@
-
-    <div class="row">
-      <div class='col-sm-6'> EmployeeId
-         <input type='number' style='color:#F6A2B3' class="form-control" id='datetimepicker4' />
-      </div>
-      <div class='col-sm-6'>Employee Name
-         <input type='text' style='color:#F6A2B3' class="form-control" id='datetimepicker4' />
-      </div>
-    
-   </div>
+        <button type="submit" @onclick="OnClick">submit</button>
+</div>
 
 @code {
-   int  valuec=0;
-          
-        //public int ? CustomerDetId { get; set; }
-        //public CustomerDet? CustomerDet { get; set; }
-        //public ICollection<User>? Users { get; set; }
-      
+    IFormFile filess;
+    IFileListEntry fileList;
+    ServiceFile serviceFile = new ServiceFile();
+    CreateService Create=new CreateService();
+    string error;
+    //private List<IFormFile> files = new List<IFormFile>();
+    long maxFileSize = 1024  * 15;
+    HttpClient _Http;
+    public async Task GetFile(InputFileChangeEventArgs e)
+    {
+        using var content = new MultipartFormDataContent();
+        foreach (var f in e.GetMultipleFiles(3)) {
 
 
+            var filecontent = new StreamContent(f.OpenReadStream(maxFileSize));
+            filecontent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(f.ContentType);
+            content.Add(content: filecontent, name: "\"file\"", fileName: f.Name);
+
+        }
+
+        //var imageFile = await file.File.RequestImageFileAsync("image/jpeg", maxWidth: 640, maxHeight: 480);
+        //using Stream filestream = imageFile.OpenReadStream(maxFileSize);
+        //using MemoryStream ms = new();
+        //await filestream.CopyToAsync(ms);
+        // await files.CopyToAsync(filestream);
+
+
+        }
+        public async Task OnClick()
+        {
+            //var request = new HttpRequestMessage(HttpMethod.Post, "http://yihea20-001-site1.ftempurl.com/api/Appointment");
+            //var client = _http.CreateClient();
+            //HttpResponseMessage respons = await client.SendAsync(request);
+            //if (respons.IsSuccessStatusCode)
+            //{
+            // var result = _mapper.Map<Service>(service);
+            //result.TopServic = 3;
+            //result.ImageURL = "http://yihea20-001-site1.ftempurl.com/Upload/ServiceImage/yihea/yihea.png";
+            //result.Id = 5;
+            serviceFile.Create = Create;
+            serviceFile.Create.TopServic = 3;
+           // serviceFile.content = ;
+            var json = JsonSerializer.Serialize(serviceFile);
+
+            var respons = await Http.PostAsJsonAsync("http://yihea20-001-site1.ftempurl.com/api/Services", serviceFile);
+            if (respons.IsSuccessStatusCode)
+            {
+
+                Console.WriteLine("It Works");
+            }
+            //else
+            //{
+            //    error = $"There was an error getting our Appointment :{respons.ReasonPhrase}";
+            //} }
+        }
+
+
+        }
 }

@@ -20,5 +20,6 @@ namespace BeautyCenter.Models
         public ICollection<Employee>? EmployeesCanDo { get; set; }
         public ICollection<Employee>? EmployeesHasService { get; set; }
         public ICollection<User>? Users { get; set; }
+        public ICollection <Review>? Reviews { get; set; }
     }
 }

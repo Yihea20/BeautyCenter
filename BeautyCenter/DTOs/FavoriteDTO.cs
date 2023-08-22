@@ -1,5 +1,6 @@
 ﻿using BeautyCenter.Models;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace BeautyCenter.DTOs
 {   public class CreateFavorite
@@ -32,8 +33,15 @@ namespace BeautyCenter.DTOs
 
 
     }
-    public class FavoriteDTO: CreateFavorite
+    public class FavoriteDTO
         {
             public int Id { get; set; }
-        }
+        public int? UserID { get; set; }
+        public int? EmployeeId { get; set; }
+       
+        public Employee? Employee { get; set; }
+        public int? ServiceId { get; set; }
+        
+        public Service? Service { get; set; }
+    }
 }

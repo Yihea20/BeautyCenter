@@ -1,5 +1,4 @@
-﻿using BeautyCenter.Models.Entity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BeautyCenter.Models
@@ -11,6 +10,7 @@ namespace BeautyCenter.Models
         {
             modelBuilder.Entity<Person>().UseTpcMappingStrategy();
             modelBuilder.Entity<Appointment>().HasKey(q => q.Id);
+            modelBuilder.Entity<Favorite>().HasOne(e => e.Employee).WithOne().OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<User>().HasMany(vc => vc.ServicesOffers)
                          .WithMany(v => v.Users).UsingEntity<Appointment>(
                          vvc => vvc.HasOne(prop => prop.Service).WithMany().HasForeignKey(prop => prop.ServiceId).OnDelete(DeleteBehavior.Restrict),
@@ -52,6 +52,7 @@ namespace BeautyCenter.Models
         public DbSet<CustomerDet> CustomerDets { get; set; }
         public DbSet<Manager> Managers { get; set; }
         public DbSet<TimeModel> TimeModels { get; set; }
+        public DbSet<Review> Reviews { get; set; }
     }
    
 }

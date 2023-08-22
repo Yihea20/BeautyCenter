@@ -17,6 +17,8 @@ namespace BeautyCenter.DTOs
     public class EmployeeDTO : CreateEmployee
     {
         public int Id { get; set; }
-        public ICollection<DateTime> DateTimes { get; set; }
+        public ICollection<Service>? ServicesCanDo { get; set; }
+        public ICollection<TimeModel>? DateTime { get; set; }
+        public ICollection<Review>? Reviews { get; set; }
     }
 }
